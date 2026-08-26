@@ -147,41 +147,10 @@ function dismissSplash(){
 
 function initHomepageMusic(site){
   __siteMusic = site?.homepageMusic || null;
-  const titleEl = $("#musicTitle"), artistEl=$("#musicArtist"), coverEl=$("#musicCover"), viz=$("#viz");
-  const playBtn=$("#playBtn"), prevBtn=$("#prevBtn"), nextBtn=$("#nextBtn");
-  const vol=$("#vol"), fill=$("#progressFill"), wrap=$("#progressWrap");
-
-  // Set initial display
+  // background-only: preload silently, no UI
   if(__siteMusic){
     try{ window.Music.load(__siteMusic, { autoplay:false }); }catch{}
-    if(titleEl) titleEl.textContent = "Sanctuary — Ready";
-    if(artistEl) artistEl.textContent = "Tap Enter to play";
-  } else {
-    if(titleEl) titleEl.textContent = "Sanctuary — Silent";
-    if(artistEl) artistEl.textContent = "Add homepageMusic in members.json";
   }
-
-  playBtn?.addEventListener("click", async ()=>{
-    try{ window.Music.setInteract(); }catch{}
-    if(!window.Music.getAudio().src && __siteMusic) try{ window.Music.load(__siteMusic); }catch{}
-    const ok = await window.Music.play().catch(()=>false);
-    if(!ok && __siteMusic) toast("Music blocked — tap again", true);
-    syncPlayUI();
-  });
-  prevBtn?.addEventListener("click", ()=> toast("Homepage track — single sanctuary mix"));
-  nextBtn?.addEventListener("click", ()=> toast("Add more tracks in Music system"));
-
-  vol?.addEventListener("input", e=> window.Music.setVolume(e.target.value/100));
-  try{
-    window.Music.onProgress((pct)=>{
-      if(fill) fill.style.width = pct.toFixed(1)+"%";
-    });
-  }catch{}
-  wrap?.addEventListener("click", e=>{
-    const r = wrap.getBoundingClientRect();
-    const pct = ((e.clientX - r.left)/r.width)*100;
-    window.Music.seek(pct);
-  });
 }
 
 // Fetch members.json repo-relative
