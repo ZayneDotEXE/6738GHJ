@@ -17,8 +17,9 @@ const Music = (() => {
     if (audio) return audio;
     audio = new Audio();
     audio.preload = "metadata";
-    audio.crossOrigin = "anonymous";
-    audio.volume = 0.72;
+    audio.loop = true;
+    // no crossOrigin - allows any MP3 link without CORS, background play only
+    audio.volume = 0.52;
     audio.addEventListener("play", () => _startProgress());
     audio.addEventListener("pause", () => _stopProgress());
     audio.addEventListener("ended", () => _stopProgress());
