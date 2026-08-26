@@ -171,6 +171,3 @@
   text-align: center;
 }
 .error-panel h2 { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.35); }
-
-/* Profile music player — inherits global but slightly larger */
-.profile-page .music-player { background: rgba(6,6,8,0.62); }
