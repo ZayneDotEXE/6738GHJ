@@ -16,7 +16,7 @@
 const DISCORD_CONFIG = {
   // >>> SET THIS TO YOUR SERVERLESS URL e.g. "https://your-worker.workers.dev"
   // Keep empty for demo mode (no secret needed, uses mock + CDN patterns).
-  apiEndpoint: "https://discordapp.com/api/v10/users/@me",
+  apiEndpoint: "https://discordapp.com/api/v10/users",
 
   // Optional: cache TTL ms (5 min)
   cacheTtlMs: 5 * 60 * 1000,
