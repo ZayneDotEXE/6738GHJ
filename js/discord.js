@@ -25,71 +25,138 @@ const DISCORD_CONFIG = {
   fallbackAvatar: (id) => `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(id) % 5n)}.png`
 };
 
-/** Mock dataset — allows site to work without any API (demo/preview). Replace IDs as needed. */
+/** Mock dataset — real LONESTAR Discord IDs. Live Discord data will override these when apiEndpoint is set. */
 const MOCK_USERS = {
-  "112233445566778899": {
-    id: "112233445566778899",
-    username: "aurelius",
-    displayName: "AURELIUS NOIR",
+  // Founder
+  "575999868804399119": {
+    id: "575999868804399119",
+    username: "lonestar.founder",
+    displayName: "LONESTAR FOUNDER",
     avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=320&q=80&auto=format&fit=crop",
     banner: null,
     avatarDecoration: null,
     badges: ["HOUSE_BRAVERY", "EARLY_SUPPORTER"],
     accentColor: null
   },
-  "223344556677889900": {
-    id: "223344556677889900",
-    username: "godmother",
-    displayName: "MOTHER VELVET",
-    avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=320&q=80&auto=format&fit=crop",
+  // Godmother
+  "641532736024215553": {
+    id: "641532736024215553",
+    username: "nocturnalxx1",
+    displayName: "notyouraxtxm",
+    avatar: "https://cdn.discordapp.com/avatars/641532736024215553/2595e16f01965c92eeb15d22995cf525.png?size=256",
     banner: null,
     avatarDecoration: null,
+    badges: ["HOUSE_BRILLIANCE", "NITRO"],
+    accentColor: null
+  },
+  "863299682045132800": {
+    id: "863299682045132800",
+    username: "lonestar.godmother",
+    displayName: "LONESTAR GODMOTHER",
+    avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=320&q=80&auto=format&fit=crop",
+    banner: null,
     badges: ["HOUSE_BRILLIANCE"],
     accentColor: null
   },
-  "334455667788990011": {
-    id: "334455667788990011",
-    username: "elias.kuro",
-    displayName: "Elias Kuro",
+  // Sins
+  "744471375208775722": {
+    id: "744471375208775722",
+    username: "lonestar.sin1",
+    displayName: "SIN — 7444",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=320&q=80&auto=format&fit=crop",
-    banner: null,
-    badges: [],
-    accentColor: null
-  },
-  "445566778899001122": {
-    id: "445566778899001122",
-    username: "sora.miyake",
-    displayName: "Sora Miyake",
-    avatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=320&q=80&auto=format&fit=crop",
     banner: null,
     badges: ["ACTIVE_DEVELOPER"],
     accentColor: null
   },
-  "556677889900112233": {
-    id: "556677889900112233",
-    username: "mira.sol",
-    displayName: "Mira Sol",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=320&q=80&auto=format&fit=crop",
+  "453997598077091842": {
+    id: "453997598077091842",
+    username: "lonestar.sin2",
+    displayName: "SIN — 4539",
+    avatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=320&q=80&auto=format&fit=crop",
     banner: null,
     badges: [],
     accentColor: null
   },
-  "667788990011223344": {
-    id: "667788990011223344",
-    username: "oren.voss",
-    displayName: "Oren Voss",
+  "776121152299991061": {
+    id: "776121152299991061",
+    username: "lonestar.sin3",
+    displayName: "SIN — 7761",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    badges: ["HOUSE_BRAVERY"],
+    accentColor: null
+  },
+  "996787931974996129": {
+    id: "996787931974996129",
+    username: "lonestar.sin4",
+    displayName: "SIN — 9967",
     avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=320&q=80&auto=format&fit=crop",
     banner: null,
     badges: [],
     accentColor: null
   },
-  "778899001122334455": {
-    id: "778899001122334455",
-    username: "sable.nox",
-    displayName: "Sable Nox",
-    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=320&q=80&auto=format&fit=crop",
+  "746710459859861524": {
+    id: "746710459859861524",
+    username: "lonestar.sin5",
+    displayName: "SIN — 7467",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    badges: [],
+    accentColor: null
+  },
+  "976341248984100915": {
+    id: "976341248984100915",
+    username: "lonestar.sin6",
+    displayName: "SIN — 9763",
+    avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=320&q=80&auto=format&fit=crop",
     banner: null,
     badges: ["HOUSE_BALANCE"],
+    accentColor: null
+  },
+  // Shits
+  "1126909367028031488": {
+    id: "1126909367028031488",
+    username: "lonestar.shit1",
+    displayName: "SHIT — 1126",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    badges: [],
+    accentColor: null
+  },
+  "1375842523456471050": {
+    id: "1375842523456471050",
+    username: "lonestar.shit2",
+    displayName: "SHIT — 1375",
+    avatar: "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    badges: [],
+    accentColor: null
+  },
+  "941726919068647425": {
+    id: "941726919068647425",
+    username: "lonestar.shit3",
+    displayName: "SHIT — 9417",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    badges: [],
+    accentColor: null
+  },
+  "709422905045417985": {
+    id: "709422905045417985",
+    username: "lonestar.shit4",
+    displayName: "SHIT — 7094",
+    avatar: "https://images.unsplash.com/photo-1544725121-be3bf52e2dc8?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    badges: [],
+    accentColor: null
+  },
+  "681133772879822860": {
+    id: "681133772879822860",
+    username: "lonestar.shit5",
+    displayName: "SHIT — 6811",
+    avatar: "https://images.unsplash.com/photo-1519345182560-3f2917c47231?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    badges: [],
     accentColor: null
   }
 };
