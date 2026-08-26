@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>IYAKNAKO — Dark Sanctuary</title>
-<meta name="description" content="A dark digital sanctuary where every member has their own atmosphere, music, and presence." />
+<title>LONESTAR — Modder Collective</title>
+<meta name="description" content="Built different. Move in silence. Leave an impact. No noise. No limits. No apologies.." />
 <meta name="color-scheme" content="dark" />
 <!-- GitHub Pages repo-relative paths: use ./ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -107,17 +107,16 @@
 <!-- No conventional nav — minimal floating status -->
 <div class="no-nav">
   <span class="pill-min" id="memberCount">— members</span>
-  <a class="pill-min" href="profile.html?id=112233445566778899" style="text-decoration:none;">Sample Profile →</a>
+  <a class="pill-min" href="profile.html?id=575999868804399119" style="text-decoration:none;">Founder Profile →</a>
 </div>
 
 <!-- ENTER EXPERIENCE overlay (unlocks audio) — single entry, no silent explore -->
 <div id="enterOverlay" style="position:fixed; inset:0; z-index:70; display:grid; place-items:center; background: radial-gradient(800px 600px at 50% 38%, rgba(10,10,14,0.72), rgba(0,0,0,0.88)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: opacity 0.7s ease, visibility 0.7s ease;">
   <div style="text-align:center; padding: 28px; max-width: 520px;">
     <div class="glow-primary" style="font-family:'Cormorant Garamond',serif; font-size:0.72rem; letter-spacing:0.38em;">PRIVATE • INVITE ONLY</div>
-    <div class="hero-title" style="font-size: clamp(2rem, 6vw, 3.6rem); margin-top:10px;">IYAKNAKO</div>
-    <p style="color: var(--text-muted); font-size:0.92rem; line-height:1.7; margin-top:12px;">A dark digital sanctuary. Each identity owns its atmosphere, music, and light. Enter only after you choose to hear.</p>
-    <button class="enter-btn" id="enterBtn" type="button" style="margin-top:18px;">Enter Sanctuary — Play Music</button>
-    <div style="margin-top:10px; font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim);">No autoplay • Your gesture unlocks sound</div>
+    <div class="hero-title" style="font-size: clamp(2rem, 6vw, 3.6rem); margin-top:10px;">LONESTAR</div>
+    <p style="color: var(--text-muted); font-size:0.92rem; line-height:1.7; margin-top:12px;">A private group not to be messed with. Each identity owns its atmosphere, music, and light.</p>
+    <button class="enter-btn" id="enterBtn" type="button" style="margin-top:18px;">Click Here</button>
   </div>
 </div>
 
@@ -125,7 +124,7 @@
 <div class="loading-screen" id="loading">
   <div style="text-align:center; display:flex; flex-direction:column; align-items:center; gap:16px;">
     <div class="loader-ring"></div>
-    <div class="glow-primary" style="font-family:'Cormorant Garamond',serif; letter-spacing:0.28em; font-size:0.92rem;">IYAKNAKO</div>
+    <div class="glow-primary" style="font-family:'Cormorant Garamond',serif; letter-spacing:0.28em; font-size:0.92rem;">LONESTAR</div>
   </div>
 </div>
 
@@ -133,15 +132,15 @@
   <!-- IMMERSIVE HERO (no nav bar) -->
   <section class="hero-full" id="top">
     <div class="hero-center">
-      <div class="community-mark anim-fadeIn">EST. 2024 — Dark Sanctuary — Invite Only</div>
+      <div class="community-mark anim-fadeIn">EST. 2026 — LONESTAR — Invite Only — Modder Collective</div>
       <h1 class="hero-title anim-fadeInUp delay-1">
-        DARK<br/>SANCTUARY
-        <span>Glowing White Identity — Glass — Cinematic Atmosphere</span>
+        LONESTAR
+        <span>Private Modder Group</span>
       </h1>
-      <p class="hero-subtitle anim-fadeIn delay-2" id="siteTagline">An original immersive world inspired by arzadon.world’s feeling, but entirely our own — deep darkness, soft white glow, and every profile a private environment.</p>
+      <p class="hero-subtitle anim-fadeIn delay-2" id="siteTagline">modder group not to be messed with. Private, elite, and untouched.</p>
       <div class="enter-wrap anim-fadeIn delay-3">
         <a href="#hierarchy" class="btn-glass" id="exploreBtn">Explore Hierarchy →</a>
-        <span class="enter-hint">Founder → Godmother → Sins → Shits — only manually chosen IDs appear</span>
+        <span class="enter-hint">Founder • Godmother • Sins • Shits</span>
       </div>
       <div class="scroll-indicator anim-fadeIn delay-4" aria-hidden="true"><i></i></div>
     </div>
@@ -176,25 +175,6 @@
     </div>
   </section>
 </main>
-
-<!-- Homepage Music Player (dark glass, white glow) -->
-<div class="music-player" id="musicPlayer" role="region" aria-label="Music player">
-  <img class="music-cover" id="musicCover" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200&q=80&auto=format&fit=crop" alt="" />
-  <div class="music-info">
-    <div class="music-title glow-soft" id="musicTitle">Sanctuary — Awaiting Entry</div>
-    <div class="music-artist" id="musicArtist">Play after interaction</div>
-  </div>
-  <div style="display:flex; align-items:center; gap:8px;">
-    <div class="viz" id="viz" style="display:none;"><i></i><i></i><i></i><i></i></div>
-    <div class="music-controls">
-      <button class="icon-btn" id="prevBtn" aria-label="Previous">‹</button>
-      <button class="icon-btn play" id="playBtn" aria-label="Play">▶</button>
-      <button class="icon-btn" id="nextBtn" aria-label="Next">›</button>
-    </div>
-    <input id="vol" type="range" min="0" max="100" value="72" style="width:72px; accent-color:#fff;" aria-label="Volume" />
-  </div>
-  <div class="progress" id="progressWrap" style="cursor:pointer;"><div class="progress-fill" id="progressFill"></div></div>
-</div>
 
 <div class="toast" id="toast"></div>
 
