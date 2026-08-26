@@ -114,46 +114,23 @@ function renderSocials(links){
 }
 
 function initMusic(entry, discord){
-  const titleEl=$("#musicTitle"), artistEl=$("#musicArtist"), coverEl=$("#musicCover");
-  const viz=$("#viz"), playBtn=$("#playBtn"), pauseBtn=$("#pauseBtn"), vol=$("#vol"), fill=$("#progressFill"), wrap=$("#progressWrap");
   const src = entry.music || "";
-  const display = discord.displayName || discord.username || "Unknown";
-  if(!src){
-    titleEl.textContent = display + " — No track";
-    artistEl.textContent = "Add \"music\": \"assets/music/...\" in members.json";
-    viz.style.display="none";
-    playBtn.style.opacity="0.5"; playBtn.style.pointerEvents="none";
-    return;
-  }
-  titleEl.textContent = (entry.profileTitle ? entry.profileTitle+" — " : "") + display;
-  artistEl.textContent = "Tap play — single track policy";
-  coverEl.src = discord.avatar || coverEl.src;
-  coverEl.onerror = ()=> coverEl.style.display="none";
-
-  window.Music.load(src, { autoplay:false });
-  window.Music.onProgress(pct=>{ if(fill) fill.style.width=pct.toFixed(1)+"%"; });
-
-  function sync(){
-    const playing = window.Music.isPlaying();
-    playBtn.style.display = playing ? "none" : "grid";
-    pauseBtn.style.display = playing ? "grid" : "none";
-    viz.style.display = playing ? "flex" : "none";
-  }
-  playBtn?.addEventListener("click", async()=>{
-    window.Music.setInteract();
-    const ok=await window.Music.play();
-    if(!ok) toast("Tap again to allow audio", true);
-    sync();
-  });
-  pauseBtn?.addEventListener("click", ()=>{ window.Music.pause(); sync(); });
-  vol?.addEventListener("input", e=> window.Music.setVolume(e.target.value/100));
-  wrap?.addEventListener("click", e=>{
-    const r=wrap.getBoundingClientRect();
-    const pct=((e.clientX - r.left)/r.width)*100;
-    window.Music.seek(pct);
-  });
-  // Watch for external stop
-  setInterval(sync, 600);
+  if(!src) return;
+  // background-only: loop, auto-play after any gesture, no visible controls
+  try{
+    window.Music.load(src, { autoplay:false });
+    // try immediate if already interacted, otherwise wait for first click/touch
+    const tryPlay = ()=> window.Music.play().catch(()=>{});
+    if(window.Music.hasInteracted()){
+      tryPlay();
+    } else {
+      const once = ()=>{ window.Music.setInteract(); tryPlay(); document.removeEventListener("click", once); document.removeEventListener("touchstart", once); };
+      document.addEventListener("click", once, {once:true});
+      document.addEventListener("touchstart", once, {once:true});
+      // also try after 600ms if user already clicked Enter on previous page (interact persisted via Music singleton)
+      setTimeout(()=>{ if(window.Music.hasInteracted()) tryPlay(); }, 600);
+    }
+  }catch{}
 }
 
 async function boot(){
@@ -214,7 +191,7 @@ async function boot(){
     // Show sanctuary
     sanctuary.style.display="grid";
     errorPanel.style.display="none";
-    document.title = `${discord.displayName} — IYAKNAKO`;
+    document.title = `${discord.displayName} — LONESTAR`;
 
   }catch(err){
     console.warn("[profile]", err);
