@@ -1,123 +1,169 @@
 {
   "site": {
     "name": "LONESTAR",
-    "tagline": "A dark digital sanctuary — where identity glows softly behind glass.",
-    "description": "Not a dashboard. Not a directory. A private cinematic world.",
-    "homepageBackground": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop",
+    "tagline": "LONESTAR — Modder collective. A private group not to be messed with. Darkness is our cover, precision is our mark.",
+    "description": "LONESTAR modder group — private, elite, untouched. Enter at your own risk.",
+    "homepageBackground": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1920&q=80&auto=format&fit=crop",
     "homepageBackgroundType": "image",
-    "homepageBackgroundFallback": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1920&q=80&auto=format&fit=crop",
-    "homepageMusic": "assets/music/sanctuary.mp3",
+    "homepageBackgroundFallback": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop",
+    "homepageMusic": "assets/music/main.mp3",
     "accent": "rgba(255,255,255,0.9)"
   },
   "members": [
     {
       "discordId": "575999868804399119",
       "hierarchy": "Founder",
-      "bio": "Darkness is not absence — it is a deliberate canvas. I build quiet rooms where identity glows once, softly, then lingers.",
-      "background": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1920&q=80&auto=format&fit=crop",
+      "bio": "Founder of LONESTAR. The group not to be messed with — built in shadows, respected in silence. Every move is calculated, every presence is earned.",
+      "background": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop",
       "backgroundType": "image",
       "backgroundFallback": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop",
-      "music": "https://cdn.pixabay.com/download/audio/2022/03/10/audio_2a8ab20f2a.mp3",
-      "links": {
-        "instagram": "https://instagram.com/",
-        "tiktok": "",
-        "github": "https://github.com/",
-        "youtube": "",
-        "twitter": "https://x.com/",
-        "website": ""
-      },
-      "profileTitle": "Founder — Vision",
+      "music": "assets/music/founder.mp3",
+      "links": { "instagram": "", "tiktok": "", "github": "", "youtube": "", "twitter": "", "website": "" },
+      "profileTitle": "Founder — LONESTAR",
       "accent": "rgba(255,255,255,0.95)"
     },
     {
-      "discordId": "223344556677889900",
+      "discordId": "641532736024215553",
       "hierarchy": "Godmother",
-      "bio": "Keeper of rites and quiet doors. I decide who enters and what light they carry. Slow is sacred.",
+      "bio": "Godmother of LONESTAR. Keeper of the code and the creed. Loyalty is law here.",
       "background": "https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=1920&q=80&auto=format&fit=crop",
       "backgroundType": "image",
       "backgroundFallback": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop",
-      "music": "https://cdn.pixabay.com/download/audio/2021/08/04/audio_2e8b6d832a.mp3",
-      "links": {
-        "instagram": "https://instagram.com/",
-        "github": "",
-        "youtube": "https://youtube.com/",
-        "twitter": "",
-        "website": "https://example.com"
-      },
-      "profileTitle": "Godmother — Ritual"
+      "music": "assets/music/godmother.mp3",
+      "links": { "instagram": "", "github": "", "youtube": "", "twitter": "", "website": "" },
+      "profileTitle": "Godmother — LONESTAR"
     },
     {
-      "discordId": "334455667788990011",
-      "hierarchy": "Sins",
-      "bio": "I collect light leaks and film grain. Every background is a dimmed cinema screen, every word a low-frequency glow.",
-      "background": "assets/backgrounds/sin1.mp4",
-      "backgroundType": "video",
-      "backgroundFallback": "https://images.unsplash.com/photo-1502134249126-9f94e02d8a65?w=1920&q=80&auto=format&fit=crop",
-      "music": "https://cdn.pixabay.com/download/audio/2022/10/30/audio_8ef11c7d06.mp3",
-      "links": {
-        "instagram": "",
-        "tiktok": "https://tiktok.com/",
-        "github": "https://github.com/",
-        "youtube": ""
-      },
-      "profileTitle": "Sin — Image"
+      "discordId": "863299682045132800",
+      "hierarchy": "Godmother",
+      "bio": "Godmother — second throne. Silent, sharp, and respected across the dark.",
+      "background": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=1920&q=80&auto=format&fit=crop",
+      "music": "",
+      "links": { "instagram": "", "tiktok": "", "github": "" },
+      "profileTitle": "Godmother — LONESTAR"
     },
     {
-      "discordId": "445566778899001122",
+      "discordId": "744471375208775722",
       "hierarchy": "Sins",
-      "bio": "Silence has texture. I tune the haze between frames until the room breathes.",
+      "bio": "Sins — elite modder. Precision over chaos. We don't chase clout, we set it.",
+      "background": "https://images.unsplash.com/photo-1502134249126-9f94e02d8a65?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "assets/music/sin-modder.mp3",
+      "links": { "instagram": "", "tiktok": "", "github": "" },
+      "profileTitle": "Sins — Modder"
+    },
+    {
+      "discordId": "453997598077091842",
+      "hierarchy": "Sins",
+      "bio": "Sins — ghost in the code. Unseen until it's already done.",
+      "background": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "",
+      "links": { "github": "" },
+      "profileTitle": "Sins — Ghost"
+    },
+    {
+      "discordId": "776121152299991061",
+      "hierarchy": "Sins",
+      "bio": "Sins — heavy hitter. LONESTAR doesn't knock — it enters.",
+      "background": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "",
+      "links": { "instagram": "", "twitter": "" },
+      "profileTitle": "Sins — Heavy"
+    },
+    {
+      "discordId": "996787931974996129",
+      "hierarchy": "Sins",
+      "bio": "Sins — built different. Mods, methods, and myth.",
+      "background": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "assets/music/sin-myth.mp3",
+      "links": { "youtube": "", "website": "" },
+      "profileTitle": "Sins — Myth"
+    },
+    {
+      "discordId": "746710459859861524",
+      "hierarchy": "Sins",
+      "bio": "Sins — quiet storm. Respect is not given, it's taken.",
+      "background": "https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "",
+      "links": { "tiktok": "" },
+      "profileTitle": "Sins — Storm"
+    },
+    {
+      "discordId": "976341248984100915",
+      "hierarchy": "Sins",
+      "bio": "Sins — final seal. LONESTAR certified.",
       "background": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1920&q=80&auto=format&fit=crop",
       "backgroundType": "image",
       "backgroundFallback": "",
       "music": "",
-      "links": {
-        "instagram": "https://instagram.com/",
-        "twitter": "https://x.com/"
-      },
-      "profileTitle": "Sin — Haze"
+      "links": { "github": "" },
+      "profileTitle": "Sins — Certified"
     },
     {
-      "discordId": "556677889900112233",
-      "hierarchy": "Sins",
-      "bio": "Glass must stay transparent. The world behind it is the real portrait.",
+      "discordId": "1126909367028031488",
+      "hierarchy": "Shits",
+      "bio": "Shits — foot soldiers of the sanctuary. Loyal to the star.",
+      "background": "https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "",
+      "links": { "tiktok": "" },
+      "profileTitle": "Shits — Loyal"
+    },
+    {
+      "discordId": "1375842523456471050",
+      "hierarchy": "Shits",
+      "bio": "Shits — new blood, same code. Don't test LONESTAR.",
+      "background": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "",
+      "links": {},
+      "profileTitle": "Shits — New Blood"
+    },
+    {
+      "discordId": "941726919068647425",
+      "hierarchy": "Shits",
+      "bio": "Shits — shadows with teeth. We move unseen.",
+      "background": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "",
+      "links": { "youtube": "" },
+      "profileTitle": "Shits — Shadow"
+    },
+    {
+      "discordId": "709422905045417985",
+      "hierarchy": "Shits",
+      "bio": "Shits — verified LONESTAR. Not to be messed with.",
       "background": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop",
       "backgroundType": "image",
       "backgroundFallback": "",
-      "music": "https://cdn.pixabay.com/download/audio/2022/06/07/audio_b9bd4170e8.mp3",
-      "links": {
-        "github": "https://github.com/",
-        "website": "https://example.com"
-      },
-      "profileTitle": "Sin — Glass"
+      "music": "",
+      "links": {},
+      "profileTitle": "Shits — Verified"
     },
     {
-      "discordId": "667788990011223344",
+      "discordId": "681133772879822860",
       "hierarchy": "Shits",
-      "bio": "I log every GIF, MP4, WebM that ever flickered. Nothing breaks the sanctuary.",
+      "bio": "Shits — last line, first warning. Cross LONESTAR and learn.",
       "background": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1920&q=80&auto=format&fit=crop",
       "backgroundType": "image",
       "backgroundFallback": "",
       "music": "",
-      "links": {
-        "tiktok": "https://tiktok.com/",
-        "youtube": "https://youtube.com/"
-      },
-      "profileTitle": "Archive"
-    },
-    {
-      "discordId": "778899001122334455",
-      "hierarchy": "Shits",
-      "bio": "Mouse light follows, but gently — cinematic, never neon. Edges lit like a screen at midnight.",
-      "background": "assets/backgrounds/shit1.gif",
-      "backgroundType": "gif",
-      "backgroundFallback": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1920&q=80&auto=format&fit=crop",
-      "music": "",
-      "links": {
-        "instagram": "",
-        "github": "",
-        "twitter": ""
-      },
-      "profileTitle": "Echo"
+      "links": { "instagram": "" },
+      "profileTitle": "Shits — Warning"
     }
   ]
 }
