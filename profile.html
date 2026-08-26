@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Profile — IYAKNAKO</title>
+<meta name="color-scheme" content="dark" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css" />
+<link rel="stylesheet" href="./css/animations.css" />
+<link rel="stylesheet" href="./css/profile.css" />
+</head>
+<body class="profile-page">
+
+<!-- Background Stack (per-member) -->
+<div class="bg-root" aria-hidden="true">
+  <div class="bg-media" id="bgMedia">
+    <img id="bgImage" alt="" />
+    <video id="bgVideo" autoplay muted loop playsinline style="display:none;"></video>
+  </div>
+  <div class="background-overlay" id="bgOverlay"></div>
+</div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="ambient" aria-hidden="true">
+  <div class="ambient-blob ambient-blob--1"></div>
+  <div class="ambient-blob ambient-blob--2"></div>
+  <div class="ambient-blob ambient-blob--3"></div>
+</div>
+<div class="particles" id="particles" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<a class="back-link" href="./main.html">← Sanctuary</a>
+
+<div class="loading-screen" id="loading">
+  <div style="text-align:center; display:flex; flex-direction:column; align-items:center; gap:16px;">
+    <div class="loader-ring"></div>
+    <div class="glow-soft" style="letter-spacing:0.22em; font-size:0.78rem;">LOADING IDENTITY</div>
+  </div>
+</div>
+
+<main class="sanctuary" id="sanctuary" style="display:none;">
+  <div class="sanctuary-inner">
+    <!-- Hero -->
+    <section class="profile-hero glass-strong edge-light anim-scaleIn" id="hero">
+      <div class="profile-hero-top">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar-glow"></div>
+          <img class="profile-avatar" id="avatar" alt="Avatar" />
+        </div>
+        <div class="profile-meta">
+          <div class="label-glow" id="hierarchyLabel">—</div>
+          <h1 class="profile-display" id="displayName">—</h1>
+          <div class="profile-username" id="username">@— · ID —</div>
+          <div class="profile-title" id="profileTitle" style="display:none;"></div>
+          <div class="badges profile-badges" id="badges"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bio typing -->
+    <section class="bio-panel glass edge-light anim-fadeInUp delay-1">
+      <div class="label-glow" style="margin-bottom:8px;">Biography — typing</div>
+      <div class="bio-text" id="bioText"></div>
+    </section>
+
+    <!-- Socials + Details -->
+    <section class="glass edge-light anim-fadeInUp delay-2" style="padding:18px; border-radius:18px;">
+      <div class="label-glow" style="margin-bottom:10px;">Connect</div>
+      <div class="social-grid" id="socials"></div>
+      <div id="noSocials" class="text-dim" style="font-size:0.82rem; display:none;">No public links shared.</div>
+      <div class="divider" style="margin:14px 0;"></div>
+      <div class="detail-row">
+        <div class="detail-card glass-subtle"><span class="detail-label">Discord ID</span><span class="detail-value" id="did">—</span></div>
+        <div class="detail-card glass-subtle"><span class="detail-label">Hierarchy</span><span class="detail-value" id="hier">—</span></div>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn-ghost" id="copyId">Copy ID</button>
+        <button class="btn-ghost" id="copyLink">Copy Profile Link</button>
+        <a class="btn-ghost" href="./main.html">Back to Hierarchy</a>
+      </div>
+    </section>
+
+    <!-- Error fallback hidden -->
+    <section id="errorPanel" class="error-panel glass-strong edge-light" style="display:none;">
+      <h2 class="glow-soft">Identity Not Found</h2>
+      <p class="text-muted" style="margin-top:8px; line-height:1.6;">This Discord ID isn’t configured in <code>data/members.json</code> or the ID is invalid. Only manually chosen IDs appear — no server auto-import.</p>
+      <div style="margin-top:14px;"><a class="btn-glass" href="./main.html">Return to Sanctuary</a></div>
+    </section>
+  </div>
+</main>
+
+<!-- Music Player (per-member) -->
+<div class="music-player" id="musicPlayer" role="region" aria-label="Music player">
+  <img class="music-cover" id="musicCover" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200&q=80&auto=format&fit=crop" alt="" />
+  <div class="music-info">
+    <div class="music-title glow-soft" id="musicTitle">—</div>
+    <div class="music-artist" id="musicArtist">Tap play after interaction</div>
+  </div>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <div class="viz" id="viz" style="display:none;"><i></i><i></i><i></i><i></i></div>
+    <div class="music-controls">
+      <button class="icon-btn play" id="playBtn" aria-label="Play">▶</button>
+      <button class="icon-btn" id="pauseBtn" aria-label="Pause" style="display:none;">❚❚</button>
+    </div>
+    <input id="vol" type="range" min="0" max="100" value="72" style="width:72px; accent-color:#fff;" aria-label="Volume" />
+  </div>
+  <div class="progress" id="progressWrap" style="cursor:pointer;"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="./js/discord.js"></script>
+<script src="./js/background.js"></script>
+<script src="./js/music.js"></script>
+<script src="./js/profile.js"></script>
+</body>
+</html>

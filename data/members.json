@@ -1,0 +1,123 @@
+{
+  "site": {
+    "name": "LONESTAR",
+    "tagline": "A dark digital sanctuary — where identity glows softly behind glass.",
+    "description": "Not a dashboard. Not a directory. A private cinematic world.",
+    "homepageBackground": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop",
+    "homepageBackgroundType": "image",
+    "homepageBackgroundFallback": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1920&q=80&auto=format&fit=crop",
+    "homepageMusic": "assets/music/sanctuary.mp3",
+    "accent": "rgba(255,255,255,0.9)"
+  },
+  "members": [
+    {
+      "discordId": "575999868804399119",
+      "hierarchy": "Founder",
+      "bio": "Darkness is not absence — it is a deliberate canvas. I build quiet rooms where identity glows once, softly, then lingers.",
+      "background": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop",
+      "music": "https://cdn.pixabay.com/download/audio/2022/03/10/audio_2a8ab20f2a.mp3",
+      "links": {
+        "instagram": "https://instagram.com/",
+        "tiktok": "",
+        "github": "https://github.com/",
+        "youtube": "",
+        "twitter": "https://x.com/",
+        "website": ""
+      },
+      "profileTitle": "Founder — Vision",
+      "accent": "rgba(255,255,255,0.95)"
+    },
+    {
+      "discordId": "223344556677889900",
+      "hierarchy": "Godmother",
+      "bio": "Keeper of rites and quiet doors. I decide who enters and what light they carry. Slow is sacred.",
+      "background": "https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop",
+      "music": "https://cdn.pixabay.com/download/audio/2021/08/04/audio_2e8b6d832a.mp3",
+      "links": {
+        "instagram": "https://instagram.com/",
+        "github": "",
+        "youtube": "https://youtube.com/",
+        "twitter": "",
+        "website": "https://example.com"
+      },
+      "profileTitle": "Godmother — Ritual"
+    },
+    {
+      "discordId": "334455667788990011",
+      "hierarchy": "Sins",
+      "bio": "I collect light leaks and film grain. Every background is a dimmed cinema screen, every word a low-frequency glow.",
+      "background": "assets/backgrounds/sin1.mp4",
+      "backgroundType": "video",
+      "backgroundFallback": "https://images.unsplash.com/photo-1502134249126-9f94e02d8a65?w=1920&q=80&auto=format&fit=crop",
+      "music": "https://cdn.pixabay.com/download/audio/2022/10/30/audio_8ef11c7d06.mp3",
+      "links": {
+        "instagram": "",
+        "tiktok": "https://tiktok.com/",
+        "github": "https://github.com/",
+        "youtube": ""
+      },
+      "profileTitle": "Sin — Image"
+    },
+    {
+      "discordId": "445566778899001122",
+      "hierarchy": "Sins",
+      "bio": "Silence has texture. I tune the haze between frames until the room breathes.",
+      "background": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "",
+      "links": {
+        "instagram": "https://instagram.com/",
+        "twitter": "https://x.com/"
+      },
+      "profileTitle": "Sin — Haze"
+    },
+    {
+      "discordId": "556677889900112233",
+      "hierarchy": "Sins",
+      "bio": "Glass must stay transparent. The world behind it is the real portrait.",
+      "background": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "https://cdn.pixabay.com/download/audio/2022/06/07/audio_b9bd4170e8.mp3",
+      "links": {
+        "github": "https://github.com/",
+        "website": "https://example.com"
+      },
+      "profileTitle": "Sin — Glass"
+    },
+    {
+      "discordId": "667788990011223344",
+      "hierarchy": "Shits",
+      "bio": "I log every GIF, MP4, WebM that ever flickered. Nothing breaks the sanctuary.",
+      "background": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "",
+      "links": {
+        "tiktok": "https://tiktok.com/",
+        "youtube": "https://youtube.com/"
+      },
+      "profileTitle": "Archive"
+    },
+    {
+      "discordId": "778899001122334455",
+      "hierarchy": "Shits",
+      "bio": "Mouse light follows, but gently — cinematic, never neon. Edges lit like a screen at midnight.",
+      "background": "assets/backgrounds/shit1.gif",
+      "backgroundType": "gif",
+      "backgroundFallback": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1920&q=80&auto=format&fit=crop",
+      "music": "",
+      "links": {
+        "instagram": "",
+        "github": "",
+        "twitter": ""
+      },
+      "profileTitle": "Echo"
+    }
+  ]
+}

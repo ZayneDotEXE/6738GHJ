@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IYAKNAKO — Dark Sanctuary</title>
+<meta name="description" content="A dark digital sanctuary where every member has their own atmosphere, music, and presence." />
+<meta name="color-scheme" content="dark" />
+<!-- GitHub Pages repo-relative paths: use ./ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css" />
+<link rel="stylesheet" href="./css/animations.css" />
+<style> /* main-only hero extension */
+.hero-full {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 42px 16px 32px;
+  position: relative;
+}
+.hero-center {
+  width: min(820px, 96vw);
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+}
+.community-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.56);
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.28);
+  backdrop-filter: blur(10px);
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+.hero-subtitle {
+  max-width: 560px;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+.enter-wrap {
+  margin-top: 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.enter-btn {
+  padding: 15px 32px;
+  border-radius: 999px;
+  background: #fff;
+  color: #060608;
+  border: 1px solid #fff;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.55), 0 0 22px rgba(255,255,255,0.18);
+  transition: all 0.38s cubic-bezier(0.22,1,0.36,1);
+}
+.enter-btn:hover { transform: translateY(-1px) scale(1.02); box-shadow: 0 12px 36px rgba(0,0,0,0.62), 0 0 28px rgba(255,255,255,0.22); }
+.enter-hint { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); }
+.scroll-indicator {
+  margin-top: 22px;
+  width: 26px; height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  display: grid; place-items: center;
+  opacity: 0.72;
+}
+.scroll-indicator i {
+  width: 3px; height: 8px; border-radius: 999px; background: #fff; box-shadow: 0 0 8px rgba(255,255,255,0.8);
+  animation: scrollDot 1.8s ease-in-out infinite;
+}
+@keyframes scrollDot { 0%,100% { transform: translateY(-6px); opacity: 0.9; } 50% { transform: translateY(6px); opacity: 0.45; } }
+.no-nav { position: absolute; top: 18px; right: 18px; z-index: 20; display: flex; gap: 8px; }
+.pill-min {
+  padding: 8px 12px; border-radius: 999px;
+  background: rgba(0,0,0,0.32); border: 1px solid rgba(255,255,255,0.10);
+  backdrop-filter: blur(12px); color: rgba(255,255,255,0.72);
+  font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+}
+</style>
+</head>
+<body>
+
+<!-- Background Stack: Custom BG → Dark Overlay → Gradient → Vignette → Ambient → Particles → Grain → Glass -->
+<div class="bg-root" aria-hidden="true">
+  <div class="bg-media" id="bgMedia">
+    <img id="bgImage" alt="" />
+    <video id="bgVideo" autoplay muted loop playsinline style="display:none;"></video>
+  </div>
+  <div class="background-overlay" id="bgOverlay"></div>
+</div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="ambient" aria-hidden="true">
+  <div class="ambient-blob ambient-blob--1"></div>
+  <div class="ambient-blob ambient-blob--2"></div>
+  <div class="ambient-blob ambient-blob--3"></div>
+</div>
+<div class="particles" id="particles" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<!-- No conventional nav — minimal floating status -->
+<div class="no-nav">
+  <span class="pill-min" id="memberCount">— members</span>
+  <a class="pill-min" href="profile.html?id=112233445566778899" style="text-decoration:none;">Sample Profile →</a>
+</div>
+
+<!-- ENTER EXPERIENCE overlay (unlocks audio) — single entry, no silent explore -->
+<div id="enterOverlay" style="position:fixed; inset:0; z-index:70; display:grid; place-items:center; background: radial-gradient(800px 600px at 50% 38%, rgba(10,10,14,0.72), rgba(0,0,0,0.88)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: opacity 0.7s ease, visibility 0.7s ease;">
+  <div style="text-align:center; padding: 28px; max-width: 520px;">
+    <div class="glow-primary" style="font-family:'Cormorant Garamond',serif; font-size:0.72rem; letter-spacing:0.38em;">PRIVATE • INVITE ONLY</div>
+    <div class="hero-title" style="font-size: clamp(2rem, 6vw, 3.6rem); margin-top:10px;">IYAKNAKO</div>
+    <p style="color: var(--text-muted); font-size:0.92rem; line-height:1.7; margin-top:12px;">A dark digital sanctuary. Each identity owns its atmosphere, music, and light. Enter only after you choose to hear.</p>
+    <button class="enter-btn" id="enterBtn" type="button" style="margin-top:18px;">Enter Sanctuary — Play Music</button>
+    <div style="margin-top:10px; font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim);">No autoplay • Your gesture unlocks sound</div>
+  </div>
+</div>
+
+<!-- Loading -->
+<div class="loading-screen" id="loading">
+  <div style="text-align:center; display:flex; flex-direction:column; align-items:center; gap:16px;">
+    <div class="loader-ring"></div>
+    <div class="glow-primary" style="font-family:'Cormorant Garamond',serif; letter-spacing:0.28em; font-size:0.92rem;">IYAKNAKO</div>
+  </div>
+</div>
+
+<main>
+  <!-- IMMERSIVE HERO (no nav bar) -->
+  <section class="hero-full" id="top">
+    <div class="hero-center">
+      <div class="community-mark anim-fadeIn">EST. 2024 — Dark Sanctuary — Invite Only</div>
+      <h1 class="hero-title anim-fadeInUp delay-1">
+        DARK<br/>SANCTUARY
+        <span>Glowing White Identity — Glass — Cinematic Atmosphere</span>
+      </h1>
+      <p class="hero-subtitle anim-fadeIn delay-2" id="siteTagline">An original immersive world inspired by arzadon.world’s feeling, but entirely our own — deep darkness, soft white glow, and every profile a private environment.</p>
+      <div class="enter-wrap anim-fadeIn delay-3">
+        <a href="#hierarchy" class="btn-glass" id="exploreBtn">Explore Hierarchy →</a>
+        <span class="enter-hint">Founder → Godmother → Sins → Shits — only manually chosen IDs appear</span>
+      </div>
+      <div class="scroll-indicator anim-fadeIn delay-4" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+
+  <!-- HIERARCHY — dynamic from members.json + Discord -->
+  <section class="container" id="hierarchy" style="padding: 18px 0 90px;">
+    <div class="hierarchy-header reveal">
+      <div>
+        <h2 class="section-title">Hierarchy</h2>
+        <p>Quiet order rendered in dark glass. Founder at the peak, then Godmother, then Sins, then Shits. No auto-import — only IDs you place in <code style="background:rgba(255,255,255,0.06); padding:2px 6px; border-radius:6px; border:1px solid rgba(255,255,255,0.08);">data/members.json</code>.</p>
+      </div>
+      <div class="pill-min" id="statusText">Loading Discord profiles…</div>
+    </div>
+
+    <div id="tiersRoot">
+      <!-- JS renders 4 tiers in order -->
+    </div>
+
+    <div class="reveal" style="margin-top:26px; padding:18px; border-radius:16px;" id="emptyState">
+      <div class="label-glow">Configuration</div>
+      <p class="text-muted" style="font-size:0.88rem; line-height:1.6; margin-top:8px;">Add a member: copy Discord User ID → <code>data/members.json</code> → set <code>hierarchy</code> to Founder/Godmother/Sins/Shits → bio/background/music/links. No server ID needed.</p>
+      <pre style="margin-top:12px; background:rgba(0,0,0,0.32); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; overflow:auto; font-size:0.72rem; color:#c8c8ce;">{
+  "discordId": "123456789012345678",
+  "hierarchy": "Sins",
+  "bio": "Your cinematic biography.",
+  "background": "assets/backgrounds/member.mp4",
+  "backgroundType": "video",
+  "backgroundFallback": "assets/backgrounds/member.webp",
+  "music": "assets/music/member.mp3",
+  "links": { "instagram": "https://..." }
+}</pre>
+    </div>
+  </section>
+</main>
+
+<!-- Homepage Music Player (dark glass, white glow) -->
+<div class="music-player" id="musicPlayer" role="region" aria-label="Music player">
+  <img class="music-cover" id="musicCover" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200&q=80&auto=format&fit=crop" alt="" />
+  <div class="music-info">
+    <div class="music-title glow-soft" id="musicTitle">Sanctuary — Awaiting Entry</div>
+    <div class="music-artist" id="musicArtist">Play after interaction</div>
+  </div>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <div class="viz" id="viz" style="display:none;"><i></i><i></i><i></i><i></i></div>
+    <div class="music-controls">
+      <button class="icon-btn" id="prevBtn" aria-label="Previous">‹</button>
+      <button class="icon-btn play" id="playBtn" aria-label="Play">▶</button>
+      <button class="icon-btn" id="nextBtn" aria-label="Next">›</button>
+    </div>
+    <input id="vol" type="range" min="0" max="100" value="72" style="width:72px; accent-color:#fff;" aria-label="Volume" />
+  </div>
+  <div class="progress" id="progressWrap" style="cursor:pointer;"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Scripts: order matters (no bundler, GitHub Pages safe) -->
+<script src="./js/discord.js"></script>
+<script src="./js/background.js"></script>
+<script src="./js/music.js"></script>
+<script src="./js/main.js"></script>
+</body>
+</html>
