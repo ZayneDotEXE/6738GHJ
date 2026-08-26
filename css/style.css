@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DARK CINEMATIC THEME — IYAKNAKO / LONESTAR
+   DARK CINEMATIC THEME — LONESTAR (Modder Collective)
    Vision: Black/Dark Background → Transparent Dark Glass → White Typography → Subtle White Glow → Cinematic Motion
    ========================================================================== */
 
@@ -660,85 +660,7 @@ img { display: block; max-width: 100%; }
   color: rgba(255,255,255,0.78);
 }
 
-/* ---------- Music Player (glass, dark) ---------- */
-.music-player {
-  position: fixed;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
-  width: min(560px, 92vw);
-  padding: 12px 14px;
-  border-radius: 18px;
-  display: flex; align-items: center; gap: 12px;
-  z-index: 30;
-  background: rgba(8, 8, 10, 0.58);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.14);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.65), 0 0 20px rgba(255,255,255,0.05);
-}
-.music-cover {
-  width: 44px; height: 44px;
-  border-radius: 9px;
-  object-fit: cover;
-  border: 1px solid rgba(255,255,255,0.12);
-  flex-shrink: 0;
-}
-.music-info { flex: 1; min-width: 0; }
-.music-title {
-  font-size: 0.84rem;
-  font-weight: 600;
-  color: #fff;
-  text-shadow: var(--glow-soft);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.music-artist { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.music-controls { display: flex; align-items: center; gap: 8px; }
-.icon-btn {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  display: grid; place-items: center;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.10);
-  color: #fff;
-  transition: all 0.3s ease;
-}
-.icon-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.18); box-shadow: 0 0 12px rgba(255,255,255,0.08); }
-.icon-btn.play {
-  width: 36px; height: 36px;
-  background: #fff;
-  color: #0a0a0d;
-  border-color: #fff;
-  box-shadow: 0 0 16px rgba(255,255,255,0.28);
-}
-.icon-btn.play:hover { transform: scale(1.04); box-shadow: 0 0 22px rgba(255,255,255,0.34); }
-.progress {
-  position: absolute;
-  left: 14px; right: 14px; bottom: 6px;
-  height: 2px;
-  background: rgba(255,255,255,0.10);
-  border-radius: 999px;
-  overflow: hidden;
-}
-.progress-fill { height: 100%; width: 34%; background: linear-gradient(90deg, #fff, rgba(255,255,255,0.65)); box-shadow: 0 0 8px rgba(255,255,255,0.6); }
-
-/* ---------- Modals, Loading, Errors (dark consistent) ---------- */
-.modal-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.62);
-  backdrop-filter: blur(10px);
-  display: none; place-items: center;
-  z-index: 50;
-  padding: 20px;
-}
-.modal-backdrop.open { display: grid; }
-.modal {
-  width: min(520px, 96vw);
-  padding: 26px;
-  border-radius: 20px;
-  text-align: left;
-}
-.modal h3 { color: #fff; text-shadow: var(--glow-soft); letter-spacing: 0.08em; }
+/* ---------- Loading, Errors (dark consistent) ---------- */
 .loading-screen {
   position: fixed; inset: 0;
   background: #050507;
@@ -792,8 +714,5 @@ img { display: block; max-width: 100%; }
 
 /* Mobile */
 @media (max-width: 720px) {
-  .nav-links { display: none; }
-  .hero { padding-top: 28px; }
-  .profile-card, .info-panel { padding: 18px; }
-  .music-player { bottom: 12px; padding: 10px 12px; }
+  .hero-full { padding-top: 28px; }
 }
