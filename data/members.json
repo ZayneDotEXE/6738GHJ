@@ -45,6 +45,17 @@
       "profileTitle": "Godmother — LONESTAR"
     },
     {
+      "discordId": "1242493526206447677",
+      "hierarchy": "Sins",
+      "bio": "Sins — elite modder. Precision over chaos. We don't chase clout, we set it.",
+      "background": "assets/images/shino.jpeg",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "assets/music/shino.mp3",
+      "links": { "instagram": "https://www.instagram.com/finwh_o/", "tiktok": "https://www.tiktok.com/@oncethenfallwlbe", "github": "" },
+      "profileTitle": "Sins — Modder"
+    },
+    {
       "discordId": "744471375208775722",
       "hierarchy": "Sins",
       "bio": "Sins — elite modder. Precision over chaos. We don't chase clout, we set it.",
