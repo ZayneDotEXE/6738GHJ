@@ -18,7 +18,7 @@
       "backgroundType": "image",
       "backgroundFallback": "",
       "music": "assets/music/zayne.mp3",
-      "links": { "instagram": "", "tiktok": "", "github": "", "youtube": "", "twitter": "", "website": "" },
+      "links": { "instagram": "", "tiktok": "https://www.tiktok.com/@aintlowquality", "github": "", "youtube": "", "twitter": "", "website": "" },
       "profileTitle": "Founder — LONESTAR",
       "accent": "rgba(255,255,255,0.95)"
     },
