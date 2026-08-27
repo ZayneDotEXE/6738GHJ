@@ -34,9 +34,9 @@ function qp(name){ return new URLSearchParams(location.search).get(name); }
       if(Math.hypot(mx-gx,my-gy)>0.5) raf=requestAnimationFrame(tick);
     });
   }, {passive:true});
-  const c=$("#particles");
+   const c=$("#particles");
   if(c && !matchMedia("(prefers-reduced-motion: reduce)").matches){
-    for(let i=0;i<12;i++){
+    for(let i=0;i<22;i++){
       const p=document.createElement("span");
       p.className="particle";
       p.style.left=(Math.random()*100)+"%";
@@ -170,7 +170,16 @@ async function boot(){
     if(entry.profileTitle){ t.textContent = entry.profileTitle; t.style.display="inline-flex"; }
     else t.style.display="none";
 
-    $("#badges").innerHTML = window.DiscordAPI.renderBadges(discord.badges||[]) || `<span class="badge">No badges</span>`;
+    const badgesHtml = window.DiscordAPI.renderBadges(discord.badges||[]);
+    $("#badges").innerHTML = badgesHtml || `<span class="badge" style="opacity:0.62;">No badges</span>`;
+    // presence dot bottom-right
+    const dot = document.getElementById("presenceDot");
+    if(dot){
+      const s = String(discord.presence || "offline").toLowerCase();
+      const cls = ["online","idle","dnd","offline"].includes(s) ? s : "offline";
+      dot.className = "presence-dot " + cls;
+      dot.title = cls;
+    }
 
     // Bio typing
     const bio = entry.bio || "No biography configured.";
