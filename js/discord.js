@@ -16,12 +16,12 @@
 const DISCORD_CONFIG = {
   // OPTION 1 (secure, recommended): set to your serverless URL e.g. "https://your-worker.workers.dev"
   // Keep empty for demo/mock mode.
-  apiEndpoint: "",
+  apiEndpoint: "https://lonestar-discord.mhonreyes55.workers.dev/",
 
   // OPTION 2 (insecure, you said you don't care if seen): paste BOT_TOKEN directly here.
   // If set, frontend will fetch Discord API directly. GitHub secret scanning may auto-reset it.
   // Discords API does NOT send CORS headers, so direct browser fetch may be blocked — serverless (apiEndpoint) avoids that.
-  botToken: "MTUzOTE2OTg3OTk4OTQyMDE2Mw.G9Mx79.m71fw_2Gsl7_Lw8AAJ4t09EAK6HRsA2ivWBWpM", // e.g. "MTM1..."
+  botToken: "", // e.g. "MTM1..."
 
   // Optional: cache TTL ms (5 min)
   cacheTtlMs: 5 * 60 * 1000,
