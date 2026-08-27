@@ -193,18 +193,22 @@ function memberCardHTML(entry, discord){
   const badges = window.DiscordAPI.renderBadges(discord.badges || []);
   const id = escapeHtml(entry.discordId);
   const title = escapeHtml(entry.profileTitle || "");
-  // only show social icons that exist? Card shows badges only; profile shows socials.
   const hasMusic = !!entry.music;
+  const pres = String(discord.presence || "offline").toLowerCase();
+  const pcls = ["online","idle","dnd","offline"].includes(pres) ? pres : "offline";
   return `
     <article class="member-card glass ${hierarchy==="Founder"?"glass-strong":hierarchy==="Godmother"?"glass":"glass-subtle"} glass-hover edge-light" data-id="${id}" role="link" tabindex="0" aria-label="Open profile ${name}">
       <div class="member-top">
-        <img class="member-avatar" src="${avatar}" alt="${name}" loading="lazy" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'" />
+        <div class="member-avatar-wrap">
+          <img class="member-avatar" src="${avatar}" alt="${name}" loading="lazy" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'" />
+          <span class="presence-dot ${pcls}" title="${pcls}"></span>
+        </div>
         <div style="min-width:0; flex:1;">
           <div class="member-name">${name}</div>
           <div class="member-role">@${uname} · ${hierarchy}${title?` · ${title}`:""}</div>
         </div>
       </div>
-      <div class="badges" style="margin-top:10px;">${badges || `<span class="badge">ID ${id.slice(-4)}</span>`}</div>
+      <div class="badges" style="margin-top:10px;">${badges || `<span class="badge" style="opacity:0.62;">No badges</span>`}</div>
       <div class="member-foot">
         <span class="member-tag">${hierarchy}</span>
         <span class="text-dim" style="font-size:0.70rem;">${hasMusic?"♫":""} ↗</span>
