@@ -14,9 +14,14 @@
  */
 
 const DISCORD_CONFIG = {
-  // >>> SET THIS TO YOUR SERVERLESS URL e.g. "https://your-worker.workers.dev"
-  // Keep empty for demo mode (no secret needed, uses mock + CDN patterns).
-  apiEndpoint: "https://zaynedotexe.github.io/6738GHJ",
+  // OPTION 1 (secure, recommended): set to your serverless URL e.g. "https://your-worker.workers.dev"
+  // Keep empty for demo/mock mode.
+  apiEndpoint: "",
+
+  // OPTION 2 (insecure, you said you don't care if seen): paste BOT_TOKEN directly here.
+  // If set, frontend will fetch Discord API directly. GitHub secret scanning may auto-reset it.
+  // Discords API does NOT send CORS headers, so direct browser fetch may be blocked — serverless (apiEndpoint) avoids that.
+  botToken: "", // e.g. "MTM1..."
 
   // Optional: cache TTL ms (5 min)
   cacheTtlMs: 5 * 60 * 1000,
@@ -229,7 +234,7 @@ async function getDiscordUser(discordId) {
   const cached = _cache.get(discordId);
   if (cached && Date.now() - cached.t < DISCORD_CONFIG.cacheTtlMs) return cached.v;
 
-  // 1) Try secure serverless endpoint if configured
+  // 1) Try secure serverless endpoint if configured (recommended, handles CORS)
   if (DISCORD_CONFIG.apiEndpoint) {
     try {
       const url = `${DISCORD_CONFIG.apiEndpoint.replace(/\/$/, "")}/api/discord/user/${encodeURIComponent(discordId)}`;
@@ -243,6 +248,24 @@ async function getDiscordUser(discordId) {
       }
     } catch (err) {
       console.warn("[discord] endpoint failed, falling back:", err?.message || err);
+    }
+  }
+
+  // 1b) Direct bot token in frontend (insecure, you said ok) — may be blocked by CORS
+  if (DISCORD_CONFIG.botToken) {
+    try {
+      const res = await fetch(`https://discord.com/api/v10/users/${encodeURIComponent(discordId)}`, {
+        headers: { Authorization: `Bot ${DISCORD_CONFIG.botToken}`, Accept: "application/json" }
+      });
+      if (!res.ok) throw new Error(`Discord direct ${res.status}`);
+      const j = await res.json();
+      const user = normalizeUser(j, discordId);
+      if (user) {
+        _cache.set(discordId, { v: user, t: Date.now() });
+        return user;
+      }
+    } catch (err) {
+      console.warn("[discord] direct botToken fetch failed (likely CORS, use apiEndpoint instead):", err?.message || err);
     }
   }
 
