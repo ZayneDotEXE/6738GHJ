@@ -76,6 +76,11 @@
   transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
 }
 .profile-avatar:hover { transform: scale(1.03) rotate(0.6deg); }
+.profile-avatar-wrap .presence-dot {
+  width: 18px; height: 18px;
+  right: 4px; bottom: 4px;
+  border-width: 3px;
+}
 .profile-avatar-glow {
   position: absolute; inset: -10px;
   border-radius: 30px;
