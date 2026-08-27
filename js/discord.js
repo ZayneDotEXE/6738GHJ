@@ -21,7 +21,7 @@ const DISCORD_CONFIG = {
   // OPTION 2 (insecure, you said you don't care if seen): paste BOT_TOKEN directly here.
   // If set, frontend will fetch Discord API directly. GitHub secret scanning may auto-reset it.
   // Discords API does NOT send CORS headers, so direct browser fetch may be blocked — serverless (apiEndpoint) avoids that.
-  botToken: "", // e.g. "MTM1..."
+  botToken: "MTUzOTE2OTg3OTk4OTQyMDE2Mw.G9Mx79.m71fw_2Gsl7_Lw8AAJ4t09EAK6HRsA2ivWBWpM", // e.g. "MTM1..."
 
   // Optional: cache TTL ms (5 min)
   cacheTtlMs: 5 * 60 * 1000,
