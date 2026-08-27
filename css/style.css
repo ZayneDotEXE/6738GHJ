@@ -628,6 +628,21 @@ img { display: block; max-width: 100%; }
   object-fit: cover;
   border: 1px solid rgba(255,255,255,0.12);
 }
+.member-avatar-wrap { position: relative; flex-shrink: 0; }
+.presence-dot {
+  position: absolute;
+  right: -2px; bottom: -2px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid #0a0a0d;
+  background: #80848e;
+  box-shadow: 0 0 8px rgba(0,0,0,0.45);
+  z-index: 2;
+}
+.presence-dot.online { background: #23a559; box-shadow: 0 0 8px rgba(35,165,89,0.55); }
+.presence-dot.idle { background: #f0b132; box-shadow: 0 0 8px rgba(240,177,50,0.55); }
+.presence-dot.dnd { background: #f23f42; box-shadow: 0 0 8px rgba(242,63,66,0.55); }
+.presence-dot.offline { background: #80848e; }
 .member-role {
   font-size: 0.66rem;
   letter-spacing: 0.12em;
