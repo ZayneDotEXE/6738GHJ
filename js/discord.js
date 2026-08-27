@@ -189,7 +189,56 @@ const BADGE_META = {
   NITRO: { label: "Nitro", icon: "⬥" }
 };
 
+// Discord flags bitfield -> badge names (public_flags)
+const FLAG_BITS = [
+  [1, "STAFF"],
+  [2, "PARTNER"],
+  [4, "HYPESQUAD"],
+  [8, "BUG_HUNTER_LEVEL_1"],
+  [16, "BUG_HUNTER_LEVEL_2"],
+  [64, "HOUSE_BRAVERY"],
+  [128, "HOUSE_BRILLIANCE"],
+  [256, "HOUSE_BALANCE"],
+  [512, "EARLY_SUPPORTER"],
+  [16384, "VERIFIED_BOT"],
+  [131072, "VERIFIED_DEVELOPER"],
+  [262144, "CERTIFIED_MODERATOR"],
+  [4194304, "ACTIVE_DEVELOPER"]
+];
+function flagsToBadges(val){
+  if(typeof val !== "number" || !val) return [];
+  const out=[];
+  for(const [bit,name] of FLAG_BITS){
+    if((val & bit) === bit) out.push(name);
+  }
+  return out;
+}
+
 const _cache = new Map();
+const _presenceCache = new Map();
+
+// Presence via Lanyard (public, CORS *) — best effort, falls back to offline
+async function getPresence(discordId){
+  if(_presenceCache.has(discordId)){
+    const c=_presenceCache.get(discordId);
+    if(Date.now()-c.t < 60000) return c.v;
+  }
+  try{
+    const r=await fetch(`https://api.lanyard.rest/v1/users/${encodeURIComponent(discordId)}`, { cache:"no-store" });
+    if(r.ok){
+      const j=await r.json();
+      const s=j?.data?.discord_status;
+      if(s && ["online","idle","dnd","offline"].includes(s)){
+        const v = s === "offline" ? "offline" : s; // invisible = offline
+        _presenceCache.set(discordId, {v, t:Date.now()});
+        return v;
+      }
+    }
+  }catch{}
+  // fallback: check Discord raw status if available, else offline
+  _presenceCache.set(discordId, {v:"offline", t:Date.now()});
+  return "offline";
+}
 
 function isValidSnowflake(id) {
   return typeof id === "string" && /^\d{17,22}$/.test(id);
@@ -204,10 +253,19 @@ function toDiscordCdnAvatarUrl(id, hash, ext = "png", size = 256) {
 
 function normalizeUser(raw, id) {
   if (!raw) return null;
-  // Support both serverless shape and raw Discord API shape
   const avatarHash = raw.avatar ?? raw.avatarHash ?? null;
   const avatarUrl = raw.avatarUrl || (avatarHash ? toDiscordCdnAvatarUrl(id, avatarHash) : raw.avatar || MOCK_USERS[id]?.avatar || DISCORD_CONFIG.fallbackAvatar(id));
   const bannerUrl = raw.bannerUrl || raw.banner || null;
+  // badges: support array or bitfield integer (public_flags/flags)
+  let badges = [];
+  if(Array.isArray(raw.badges) && raw.badges.length) badges = raw.badges;
+  else if(Array.isArray(raw.flags) && raw.flags.length) badges = raw.flags;
+  else {
+    const pf = raw.public_flags ?? raw.publicFlags ?? raw.flags;
+    if(typeof pf === 'number') badges = flagsToBadges(pf);
+  }
+  // also try raw.data?.public_flags if nested
+  if(!badges.length && raw.data && typeof raw.data.public_flags === 'number') badges = flagsToBadges(raw.data.public_flags);
   return {
     id: String(raw.id || id),
     username: raw.username || raw.user?.username || "unknown",
@@ -215,7 +273,8 @@ function normalizeUser(raw, id) {
     avatar: avatarUrl,
     banner: bannerUrl,
     avatarDecoration: raw.avatarDecoration || raw.avatar_decoration_data || null,
-    badges: Array.isArray(raw.badges) ? raw.badges : Array.isArray(raw.flags) ? raw.flags : [],
+    badges,
+    presence: raw.presence || raw.status || null, // online/idle/dnd/offline
     accentColor: raw.accentColor ?? raw.accent_color ?? null,
     raw
   };
@@ -229,10 +288,16 @@ function normalizeUser(raw, id) {
 async function getDiscordUser(discordId) {
   if (!isValidSnowflake(discordId)) {
     console.warn("[discord] invalid snowflake:", discordId);
-    return _mockFallback(discordId);
+    const m = await _mockFallback(discordId);
+    m.presence = await getPresence(discordId);
+    return m;
   }
   const cached = _cache.get(discordId);
-  if (cached && Date.now() - cached.t < DISCORD_CONFIG.cacheTtlMs) return cached.v;
+  if (cached && Date.now() - cached.t < DISCORD_CONFIG.cacheTtlMs) {
+    // refresh presence even from cache (cheap)
+    if(!cached.v.presence) cached.v.presence = await getPresence(discordId);
+    return cached.v;
+  }
 
   // 1) Try secure serverless endpoint if configured (recommended, handles CORS)
   if (DISCORD_CONFIG.apiEndpoint) {
@@ -243,6 +308,7 @@ async function getDiscordUser(discordId) {
       const json = await res.json();
       const user = normalizeUser(json.data || json.user || json, discordId);
       if (user) {
+        user.presence = await getPresence(discordId);
         _cache.set(discordId, { v: user, t: Date.now() });
         return user;
       }
@@ -261,6 +327,7 @@ async function getDiscordUser(discordId) {
       const j = await res.json();
       const user = normalizeUser(j, discordId);
       if (user) {
+        user.presence = await getPresence(discordId);
         _cache.set(discordId, { v: user, t: Date.now() });
         return user;
       }
@@ -270,7 +337,9 @@ async function getDiscordUser(discordId) {
   }
 
   // 2) Mock fallback — never breaks site
-  return _mockFallback(discordId);
+  const m = await _mockFallback(discordId);
+  m.presence = await getPresence(discordId);
+  return m;
 }
 
 function _mockFallback(id) {
@@ -304,7 +373,7 @@ function renderBadges(badges) {
 
 // Expose globally for non-module script loading (GitHub Pages simple)
 if (typeof window !== "undefined") {
-  window.DiscordAPI = { getDiscordUser, renderBadges, DISCORD_CONFIG, isValidSnowflake, BADGE_META };
+  window.DiscordAPI = { getDiscordUser, getPresence, renderBadges, DISCORD_CONFIG, isValidSnowflake, BADGE_META };
 }
 // ES module export (if loaded as module)
 try { if (typeof module !== "undefined") module.exports = { getDiscordUser }; } catch {}
