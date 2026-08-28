@@ -64,15 +64,6 @@ const MOCK_USERS = {
     accentColor: null
   },
   // Sins
-   "1242493526206447677": {
-    id: "1242493526206447677",
-    username: "lonestar.sin7",
-    displayName: "SIN — 1242",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=320&q=80&auto=format&fit=crop",
-    banner: null,
-    badges: ["ACTIVE_DEVELOPER"],
-    accentColor: null
-  },
   "744471375208775722": {
     id: "744471375208775722",
     username: "lonestar.sin1",
@@ -169,6 +160,15 @@ const MOCK_USERS = {
     username: "lonestar.shit5",
     displayName: "SHIT — 6811",
     avatar: "https://images.unsplash.com/photo-1519345182560-3f2917c47231?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    badges: [],
+    accentColor: null
+  },
+  "1242493526206447677": {
+    id: "1242493526206447677",
+    username: "lonestar.sin7",
+    displayName: "SIN — 1242",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=320&q=80&auto=format&fit=crop",
     banner: null,
     badges: [],
     accentColor: null
