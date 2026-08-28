@@ -64,6 +64,15 @@ const MOCK_USERS = {
     accentColor: null
   },
   // Sins
+   "1242493526206447677": {
+    id: "1242493526206447677",
+    username: "lonestar.sin7",
+    displayName: "SIN — 1242",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    badges: ["ACTIVE_DEVELOPER"],
+    accentColor: null
+  },
   "744471375208775722": {
     id: "744471375208775722",
     username: "lonestar.sin1",
