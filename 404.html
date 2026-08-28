@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LONESTAR — Redirect</title>
+<meta name="color-scheme" content="dark" />
+<style>html,body{height:100%;margin:0;background:#050507;color:#9a9aa0;display:grid;place-items:center;font-family:Inter,system-ui,sans-serif}</style>
+<script>
+// Handle clean URLs: lonestarwxrld.com/@_lowquality  or /6738GHJ/@ZAYNE  -> profile.html?username=...
+(function(){
+  const path = location.pathname;
+  const at = path.indexOf("/@");
+  if(at !== -1){
+    const raw = decodeURIComponent(path.slice(at+2).split("/")[0].split("?")[0].split("#")[0]).trim();
+    if(raw){
+      // keep repo prefix (e.g. /6738GHJ) if present
+      const prefix = path.slice(0, at);
+      const base = prefix.endsWith("/") ? prefix : prefix + "/";
+      // preserve search/hash already handled, go to profile.html?username=
+      location.replace(base + "profile.html?username=" + encodeURIComponent(raw));
+      return;
+    }
+  }
+  // also handle /u/ZAYNE or /profile/ZAYNE
+  const m = path.match(/\/profile\/([^\/?#]+)/);
+  if(m){
+    const raw2 = decodeURIComponent(m[1]);
+    const prefix2 = path.split("/profile/")[0] + "/";
+    location.replace(prefix2 + "profile.html?username=" + encodeURIComponent(raw2));
+    return;
+  }
+})();
+</script>
+</head>
+<body>
+  <div style="text-align:center; padding:22px;">
+    <div style="color:#fff; text-shadow:0 0 6px rgba(255,255,255,0.35); letter-spacing:0.14em; font-weight:700;">LONESTAR</div>
+    <div style="margin-top:8px; font-size:0.82rem;">Redirecting… <a href="./main.html" style="color:#fff;">Sanctuary</a></div>
+  </div>
+</body>
+</html>
