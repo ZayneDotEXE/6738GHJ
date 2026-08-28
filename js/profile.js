@@ -36,7 +36,7 @@ function qp(name){ return new URLSearchParams(location.search).get(name); }
   }, {passive:true});
    const c=$("#particles");
   if(c && !matchMedia("(prefers-reduced-motion: reduce)").matches){
-    for(let i=0;i<22;i++){
+    for(let i=0;i<28;i++){
       const p=document.createElement("span");
       p.className="particle";
       p.style.left=(Math.random()*100)+"%";
@@ -133,22 +133,79 @@ function initMusic(entry, discord){
   }catch{}
 }
 
+function getAllParams(){
+  const p = new URLSearchParams(location.search);
+  const byId = (p.get("id")||"").trim();
+  const byUser = (p.get("username")||p.get("u")||p.get("user")||p.get("name")||"").trim();
+  // clean URL: /@_lowquality or /@ZAYNE or /6738GHJ/@_lowquality
+  let clean = "";
+  const path = location.pathname;
+  const atIdx = path.indexOf("/@");
+  if(atIdx !== -1){
+    clean = decodeURIComponent(path.slice(atIdx+2).split("/")[0].split("?")[0].split("#")[0]).trim();
+  }
+  return { byId, byUser: byUser || clean };
+}
+
 async function boot(){
-  const id = (qp("id")||"").trim();
   const loading=$("#loading"), sanctuary=$("#sanctuary"), errorPanel=$("#errorPanel"), hero=$("#hero");
   try{
-    if(!id || !window.DiscordAPI.isValidSnowflake(id)){
-      throw Object.assign(new Error(id? "Invalid Discord ID format — must be 17-22 digits":"Missing ?id= — open via a member card"), { code:"INVALID_ID" });
-    }
     const data = await fetchMembers();
     const members = Array.isArray(data.members)? data.members : Array.isArray(data)? data : [];
-    const entry = members.find(m=> String(m.discordId).trim()===id);
+    const { byId, byUser } = getAllParams();
+    let id = byId;
+    let entry = null;
+    // 1) direct id
+    if(id && window.DiscordAPI.isValidSnowflake(id)){
+      entry = members.find(m=> String(m.discordId).trim()===id);
+    }
+    // 2) username / display name (case-insensitive) -> find entry via MOCK_USERS or live lookup
+    if(!entry && byUser){
+      const want = byUser.toLowerCase();
+      // try to find in members via mock username/displayName
+      for(const m of members){
+        const mock = (window.DiscordAPI && window.DiscordAPI.BADGE_META) ? null : null; // keep reference
+        // we need to check via MOCK_USERS if available, else will fetch later
+        const mid = String(m.discordId);
+        // try mock first (instant)
+        try{
+          const mockUser = (typeof MOCK_USERS !== 'undefined' && MOCK_USERS[mid]) ? MOCK_USERS[mid] : null;
+          if(mockUser){
+            if((mockUser.username||"").toLowerCase()===want || (mockUser.displayName||"").toLowerCase()===want){
+              entry = m; id = mid; break;
+            }
+          }
+        }catch{}
+      }
+      // if not found via mock, try live: fetch all and match (fallback, may be slower)
+      if(!entry){
+        // try to match by live Discord fetch for each member (first match)
+        for(const m of members){
+          try{
+            const u = await window.DiscordAPI.getDiscordUser(String(m.discordId));
+            if((u.username||"").toLowerCase()===want || (u.displayName||"").toLowerCase()===want){
+              entry = m; id = String(m.discordId); break;
+            }
+          }catch{}
+        }
+      }
+      if(!entry){
+        throw Object.assign(new Error(`User "${byUser}" not in data/members.json — add their Discord ID` ), { code:"NOT_CONFIGURED" });
+      }
+    }
+    if(!id){
+      throw Object.assign(new Error(`Missing ?id= or ?username= — open via a member card`), { code:"INVALID_ID" });
+    }
+    if(!window.DiscordAPI.isValidSnowflake(id)){
+      throw Object.assign(new Error(`Invalid Discord ID "${id}"`), { code:"INVALID_ID" });
+    }
+    // if we resolved via username, keep username in URL (user wants username in bar), else ensure entry found
+    if(!entry) entry = members.find(m=> String(m.discordId).trim()===id);
     if(!entry){
-      // Show not-found but still try Discord fetch for preview?
       const user = await window.DiscordAPI.getDiscordUser(id);
-      // If custom not found, we still show errorPanel per spec? Spec says only configured IDs appear; we should show error.
       throw Object.assign(new Error(`ID ${id} not in data/members.json — add it to make it appear`), { code:"NOT_CONFIGURED", user });
     }
+    // keep clean username in bar if accessed via username (already is), no need to replace
 
     // Resolve Discord
     const discord = await window.DiscordAPI.getDiscordUser(id);
@@ -172,10 +229,11 @@ async function boot(){
 
     const badgesHtml = window.DiscordAPI.renderBadges(discord.badges||[]);
     $("#badges").innerHTML = badgesHtml || `<span class="badge" style="opacity:0.62;">No badges</span>`;
-    // presence dot bottom-right
+    // presence dot bottom-right — entry.presence overrides Discord (fixes Lanyard 404 -> offline)
     const dot = document.getElementById("presenceDot");
     if(dot){
-      const s = String(discord.presence || "offline").toLowerCase();
+      const raw = String(entry.presence || entry.status || discord.presence || "offline").toLowerCase();
+      const s = raw === "invisible" ? "offline" : raw;
       const cls = ["online","idle","dnd","offline"].includes(s) ? s : "offline";
       dot.className = "presence-dot " + cls;
       dot.title = cls;
