@@ -285,8 +285,8 @@ async function buildHierarchy(data){
       const uname = card.getAttribute("data-username");
       if(!id) return;
       const go = ()=> { window.Music.stop();
-        // username in URL as requested: ?username=_lowquality, ?u=ZAYNE, and clean /@... handled in profile.js + 404.html
-        const target = uname ? `./profile.html?username=${encodeURIComponent(uname)}` : `./profile.html?id=${encodeURIComponent(id)}`;
+        // clean URL as requested: lonestarwxrld.com/@_lowquality
+        const target = uname ? `./@${encodeURIComponent(uname)}` : `./profile.html?id=${encodeURIComponent(id)}`;
         location.href = target;
       };
       card.addEventListener("click", go);
