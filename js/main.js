@@ -194,10 +194,11 @@ function memberCardHTML(entry, discord){
   const id = escapeHtml(entry.discordId);
   const title = escapeHtml(entry.profileTitle || "");
   const hasMusic = !!entry.music;
-  const pres = String(discord.presence || "offline").toLowerCase();
+  const rawPres = String(entry.presence || entry.status || discord.presence || "offline").toLowerCase();
+  const pres = rawPres === "invisible" ? "offline" : rawPres;
   const pcls = ["online","idle","dnd","offline"].includes(pres) ? pres : "offline";
   return `
-    <article class="member-card glass ${hierarchy==="Founder"?"glass-strong":hierarchy==="Godmother"?"glass":"glass-subtle"} glass-hover edge-light" data-id="${id}" role="link" tabindex="0" aria-label="Open profile ${name}">
+    <article class="member-card glass ${hierarchy==="Founder"?"glass-strong":hierarchy==="Godmother"?"glass":"glass-subtle"} glass-hover edge-light" data-id="${id}" data-username="${uname}" role="link" tabindex="0" aria-label="Open profile ${name}">
       <div class="member-top">
         <div class="member-avatar-wrap">
           <img class="member-avatar" src="${avatar}" alt="${name}" loading="lazy" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'" />
@@ -281,8 +282,13 @@ async function buildHierarchy(data){
     // Attach navigation
     [...grid.children].forEach(card=>{
       const id = card.getAttribute("data-id");
+      const uname = card.getAttribute("data-username");
       if(!id) return;
-      const go = ()=> { window.Music.stop(); location.href = `./profile.html?id=${encodeURIComponent(id)}`; };
+      const go = ()=> { window.Music.stop();
+        // username in URL as requested: ?username=_lowquality, ?u=ZAYNE, and clean /@... handled in profile.js + 404.html
+        const target = uname ? `./profile.html?username=${encodeURIComponent(uname)}` : `./profile.html?id=${encodeURIComponent(id)}`;
+        location.href = target;
+      };
       card.addEventListener("click", go);
       card.addEventListener("keydown", e=> { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
     });
