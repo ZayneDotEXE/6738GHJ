@@ -3,7 +3,7 @@
     "name": "LONESTAR",
     "tagline": "LONESTAR — Modder collective. A private group not to be messed with. Darkness is our cover, precision is our mark.",
     "description": "LONESTAR modder group — private, elite, untouched. Enter at your own risk.",
-    "homepageBackground": "assets/backgrounds/main.jpeg",
+    "homepageBackground": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1920&q=80&auto=format&fit=crop",
     "homepageBackgroundType": "image",
     "homepageBackgroundFallback": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop",
     "homepageMusic": "assets/music/main.mp3",
@@ -14,13 +14,14 @@
       "discordId": "575999868804399119",
       "hierarchy": "Founder",
       "bio": "Founder of LONESTAR. The group not to be messed with — built in shadows, respected in silence. Every move is calculated, every presence is earned.",
-      "background": "assets/images/zayne.gif",
+      "background": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop",
       "backgroundType": "image",
-      "backgroundFallback": "",
-      "music": "assets/music/zayne.mp3",
-      "links": { "instagram": "", "tiktok": "https://www.tiktok.com/@aintlowquality", "github": "", "youtube": "", "twitter": "", "website": "" },
+      "backgroundFallback": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop",
+      "music": "assets/music/founder.mp3",
+      "links": { "instagram": "", "tiktok": "", "github": "", "youtube": "", "twitter": "", "website": "" },
       "profileTitle": "Founder — LONESTAR",
-      "accent": "rgba(255,255,255,0.95)"
+      "accent": "rgba(255,255,255,0.95)",
+      "presence": "online"
     },
     {
       "discordId": "641532736024215553",
@@ -28,10 +29,11 @@
       "bio": "Godmother of LONESTAR. Keeper of the code and the creed. Loyalty is law here.",
       "background": "https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=1920&q=80&auto=format&fit=crop",
       "backgroundType": "image",
-      "backgroundFallback": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop",
+      "backgroundFallback": "https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=1920&q=80&auto=format&fit=crop",
       "music": "assets/music/godmother.mp3",
-      "links": { "instagram": "https://www.instagram.com/xxtinmay/", "tiktok": "https://www.tiktok.com/@xxautumn___", "youtube": "", "twitter": "", "website": "" },
-      "profileTitle": "Godmother — ARZADON"
+      "links": { "instagram": "", "github": "", "youtube": "", "twitter": "", "website": "" },
+      "profileTitle": "Godmother — LONESTAR",
+      "presence": "dnd"
     },
     {
       "discordId": "863299682045132800",
@@ -42,18 +44,7 @@
       "backgroundFallback": "https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=1920&q=80&auto=format&fit=crop",
       "music": "",
       "links": { "instagram": "", "tiktok": "", "github": "" },
-      "profileTitle": "Godmother — EXODUS"
-    },
-    {
-      "discordId": "1242493526206447677",
-      "hierarchy": "Sins",
-      "bio": "My goal is to be the best in the world. The depth of your desire is nowhere near mine",
-      "background": "assets/images/shino.jpg",
-      "backgroundType": "image",
-      "backgroundFallback": "",
-      "music": "assets/music/shino.mp3",
-      "links": { "instagram": "https://www.instagram.com/finwh_o/", "tiktok": "https://www.tiktok.com/@oncethenfallwlbe", "github": "" },
-      "profileTitle": "Sins — Modder"
+      "profileTitle": "Godmother — LONESTAR"
     },
     {
       "discordId": "744471375208775722",
@@ -64,18 +55,19 @@
       "backgroundFallback": "",
       "music": "assets/music/sin-modder.mp3",
       "links": { "instagram": "", "tiktok": "", "github": "" },
-      "profileTitle": "Sins — Ghost"
+      "profileTitle": "Sins — Modder",
+      "presence": "idle"
     },
     {
       "discordId": "453997598077091842",
       "hierarchy": "Sins",
-      "bio": "PC REPAIR, PERIPHERALS REPAIR OPTI etc. CHAT LANG BOSSING",
-      "background": "assets/images/tatang.mp4",
-      "backgroundType": "video",
+      "bio": "Sins — ghost in the code. Unseen until it's already done.",
+      "background": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
       "backgroundFallback": "",
-      "music": "assets/music/tatang.mp3",
-      "links": { "instagram": "https://www.instagram.com/jnzivan", "tiktok": "https://www.tiktok.com/@nngiyekk" },
-      "profileTitle": "Sins — Services"
+      "music": "",
+      "links": { "github": "" },
+      "profileTitle": "Sins — Ghost"
     },
     {
       "discordId": "776121152299991061",
@@ -86,7 +78,8 @@
       "backgroundFallback": "",
       "music": "",
       "links": { "instagram": "", "twitter": "" },
-      "profileTitle": "Sins — Heavy"
+      "profileTitle": "Sins — Heavy",
+      "presence": "dnd"
     },
     {
       "discordId": "996787931974996129",
@@ -175,6 +168,17 @@
       "music": "",
       "links": { "instagram": "" },
       "profileTitle": "Shits — Warning"
+    },
+    {
+      "discordId": "1242493526206447677",
+      "hierarchy": "Sins",
+      "bio": "Sins — verified LONESTAR. Ghost protocol.",
+      "background": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1920&q=80&auto=format&fit=crop",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "",
+      "links": {},
+      "profileTitle": "Sins — Ghost"
     }
   ]
 }
