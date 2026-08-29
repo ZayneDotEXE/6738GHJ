@@ -21,6 +21,19 @@
       "links": { "instagram": "", "tiktok": "", "github": "", "youtube": "", "twitter": "", "website": "" },
       "profileTitle": "Founder — LONESTAR",
       "accent": "rgba(255,255,255,0.95)",
+      "presence": "dnd"
+    },
+    {
+      "discordId": "1528034851238969496",
+      "hierarchy": "Founder",
+      "bio": "Penitence  • Eccedentesiast.",
+      "background": "assets/images/zia.jpg",
+      "backgroundType": "image",
+      "backgroundFallback": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop",
+      "music": "assets/music/Zia.mp3",
+      "links": { "instagram": "", "tiktok": "https://www.tiktok.com/@cassieeeeeeee15", "github": "", "youtube": "", "twitter": "", "website": "" },
+      "profileTitle": "Co-Founder",
+      "accent": "rgba(255,255,255,0.95)",
       "presence": "online"
     },
     {
@@ -45,6 +58,7 @@
       "music": "",
       "links": { "instagram": "", "tiktok": "", "github": "" },
       "profileTitle": "Godmother — LONESTAR"
+      "presence": "dnd"
     },
     {
       "discordId": "744471375208775722",
