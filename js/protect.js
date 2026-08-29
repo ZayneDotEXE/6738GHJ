@@ -60,7 +60,11 @@
       document.addEventListener('keydown', function(e){ e.preventDefault(); e.stopPropagation(); }, {capture:true});
       document.addEventListener('contextmenu', function(e){ e.preventDefault(); e.stopPropagation(); }, {capture:true});
     }catch(e){}
-    // stay on block screen — no window.close/history.back redirect (was causing jump to profile)
+    // Original behavior: send to Google (new-tab page) after showing block
+    setTimeout(function(){
+      try{ location.replace('https://www.google.com'); }catch(e){}
+      try{ location.href = 'https://www.google.com'; }catch(e){}
+    }, 700);
   }
   try{
     if(location.protocol === 'view-source:'){
@@ -92,13 +96,13 @@
       stopIntervalTime: 5000,
       detectors: [0,1,2,3,4,5,6,7],
       seo: true,
-      url: '',
-      timeOutUrl: '',
+      url: 'https://www.google.com',
+      timeOutUrl: 'https://www.google.com',
       rewriteHTML: '',
       ondevtoolopen: function(type, next){
         block(type);
-        // do NOT call next() — library's next() does window.close + history.back + redirect to 404
-        // which was causing navigation to profile page. Block screen stays in place.
+        // Original: redirect to Google via library's next() (url) + block's own redirect fallback (700ms) — keep in sync
+        setTimeout(function(){ try{ next(); }catch(e){ try{ location.replace('https://www.google.com'); }catch(_){} } }, 650);
       },
       ondevtoolclose: function(){
         try{ console.log('[LONESTAR] DevTools closed'); }catch(e){}
