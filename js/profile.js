@@ -113,19 +113,13 @@
     }).join("");
   }
 
-    function initMusic(entry, discord){
-      const src = entry.music || "";
-      if(!src) return;
-    // background-only: loop, auto-play when loading done (no click needed if browser allows)
-      try{
-      window.Music.load(src, { autoplay:false });
-      const tryPlay = ()=> {
-      try{ window.Music.setInteract(); }catch{}
-      window.Music.play().catch(()=>{});
-         };
-    // try autoplay immediately after load (may be blocked, then wait for gesture as fallback)
+  function initMusic(entry, discord){
+  const src = entry.music || "";
+  if(!src) return;
+  try{
+    window.Music.load(src, { autoplay:false });
+    const tryPlay = ()=>{ try{window.Music.setInteract();}catch{} window.Music.play().catch(()=>{}); };
     setTimeout(tryPlay, 650);
-    // fallback: if blocked, play on first click/touch
     const once = ()=>{ tryPlay(); document.removeEventListener("click", once); document.removeEventListener("touchstart", once); };
     document.addEventListener("click", once, {once:true});
     document.addEventListener("touchstart", once, {once:true});
