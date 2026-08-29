@@ -205,9 +205,12 @@
         const user = await window.DiscordAPI.getDiscordUser(id);
         throw Object.assign(new Error(`ID ${id} not in data/members.json — add it to make it appear`), { code:"NOT_CONFIGURED", user });
       }
-      // keep clean username in bar if accessed via username (already is), no need to replace
-
-      // Resolve Discord
+      // profile views — increment per-id regardless of ?id vs ?username vs /@ clean
+      try{
+      const vEl = document.getElementById("profileViews");
+      if(vEl && window.Counter) window.Counter.hit(`profile-${id}`, vEl);
+      }catch{}
+       // Resolve Discord
       const discord = await window.DiscordAPI.getDiscordUser(id);
       // BG
       const bgMedia=$("#bgMedia");
