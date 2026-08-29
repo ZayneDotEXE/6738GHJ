@@ -65,19 +65,15 @@ const Counter = (() => {
 
 if(typeof window !== "undefined"){
   window.Counter = Counter;
-  // auto-hit based on page
+  // auto-hit based on page — profile views are handled by profile.js after resolving ?id/?username/@ to id
   document.addEventListener("DOMContentLoaded", ()=>{
-    const isProfile = location.pathname.includes("profile.html");
+    const isProfile = location.pathname.includes("profile.html") || location.pathname.includes("/@");
     if(isProfile){
-      const id = new URLSearchParams(location.search).get("id");
-      const el = document.getElementById("profileViews");
-      if(id) Counter.hit(`profile-${id}`, el);
-      // also show main views read-only on profile
       const mainEl = document.getElementById("mainViews");
       if(mainEl) Counter.get("main", mainEl);
-    } else {
-      const el = document.getElementById("mainViews");
-      if(el) Counter.hit("main", el);
+      return;
     }
+    const el = document.getElementById("mainViews");
+    if(el) Counter.hit("main", el);
   });
 }
