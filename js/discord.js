@@ -45,7 +45,7 @@ const MOCK_USERS = {
   },
     "1528034851238969496": {
     id: "1528034851238969496",
-    username: "lonestar.founder",
+    username: "lonestar.founder2",
     displayName: "LONESTAR FOUNDER",
     avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=320&q=80&auto=format&fit=crop",
     banner: null,
