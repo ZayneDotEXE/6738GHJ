@@ -694,6 +694,37 @@ img { display: block; max-width: 100%; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* Heartbeat logo loader — replaces circle */
+.loader-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.35rem, 4.5vw, 2.05rem);
+  letter-spacing: 0.32em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6d6d74;
+  text-shadow: 0 0 0 transparent;
+  animation: heartbeat 1.55s ease-in-out infinite;
+  will-change: transform, color, text-shadow, opacity;
+}
+.loader-sub {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.52);
+  margin-top: 2px;
+}
+@keyframes heartbeat {
+  0%   { color: #5a5a62; text-shadow: 0 0 0 transparent; transform: scale(1); opacity: 0.75; }
+  14%  { color: #e8e8e6; text-shadow: 0 0 12px rgba(255,255,255,0.45), 0 0 28px rgba(255,255,255,0.22); transform: scale(1.06); opacity: 1; }
+  28%  { color: #8a8a94; text-shadow: 0 0 6px rgba(255,255,255,0.18); transform: scale(0.99); opacity: 0.88; }
+  42%  { color: #ffffff; text-shadow: 0 0 14px rgba(255,255,255,0.55), 0 0 32px rgba(255,255,255,0.28); transform: scale(1.08); opacity: 1; }
+  70%  { color: #6d6d74; text-shadow: 0 0 0 transparent; transform: scale(1); opacity: 0.8; }
+  100% { color: #5a5a62; text-shadow: 0 0 0 transparent; transform: scale(1); opacity: 0.75; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader-logo { animation: none !important; color: #e8e8e6; text-shadow: 0 0 10px rgba(255,255,255,0.35); }
+}
+
 /* Error / toast */
 .toast {
   position: fixed;
