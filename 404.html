@@ -1,42 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>/* GitHub Pages 404 clean URL base - keeps /@_lowquality working on both custom domain and /6738GHJ/ */(function(){var p=location.pathname;var repo="/6738GHJ";var base="/";if(p.indexOf(repo+"/@")!==-1||p.indexOf(repo+"/profile.html")!==-1)base=repo+"/";else if(p.indexOf("/@")!==-1||p.indexOf("/profile.html")!==-1)base="/";else base=p.split("/").length>2?"/"+p.split("/")[1]+"/":"/";var b=document.createElement("base");b.href=location.origin+base;document.head.prepend(b);})();</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LONESTAR — Redirect</title>
+<title>Profile — LONESTAR</title>
 <meta name="color-scheme" content="dark" />
-<style>html,body{height:100%;margin:0;background:#050507;color:#9a9aa0;display:grid;place-items:center;font-family:Inter,system-ui,sans-serif}</style>
-<script>
-// Handle clean URLs: lonestarwxrld.com/@_lowquality  or /6738GHJ/@ZAYNE  -> profile.html?username=...
-(function(){
-  const path = location.pathname;
-  const at = path.indexOf("/@");
-  if(at !== -1){
-    const raw = decodeURIComponent(path.slice(at+2).split("/")[0].split("?")[0].split("#")[0]).trim();
-    if(raw){
-      // keep repo prefix (e.g. /6738GHJ) if present
-      const prefix = path.slice(0, at);
-      const base = prefix.endsWith("/") ? prefix : prefix + "/";
-      // preserve search/hash already handled, go to profile.html?username=
-      location.replace(base + "profile.html?username=" + encodeURIComponent(raw));
-      return;
-    }
-  }
-  // also handle /u/ZAYNE or /profile/ZAYNE
-  const m = path.match(/\/profile\/([^\/?#]+)/);
-  if(m){
-    const raw2 = decodeURIComponent(m[1]);
-    const prefix2 = path.split("/profile/")[0] + "/";
-    location.replace(prefix2 + "profile.html?username=" + encodeURIComponent(raw2));
-    return;
-  }
-})();
-</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css" />
+<link rel="stylesheet" href="./css/animations.css" />
+<link rel="stylesheet" href="./css/profile.css" />
 </head>
-<body>
-  <div style="text-align:center; padding:22px;">
-    <div style="color:#fff; text-shadow:0 0 6px rgba(255,255,255,0.35); letter-spacing:0.14em; font-weight:700;">LONESTAR</div>
-    <div style="margin-top:8px; font-size:0.82rem;">Redirecting… <a href="./main.html" style="color:#fff;">Sanctuary</a></div>
+<body class="profile-page">
+
+<!-- Background Stack (per-member) -->
+<div class="bg-root" aria-hidden="true">
+  <div class="bg-media" id="bgMedia">
+    <img id="bgImage" alt="" />
+    <video id="bgVideo" autoplay muted loop playsinline style="display:none;"></video>
   </div>
+  <div class="background-overlay" id="bgOverlay"></div>
+</div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="ambient" aria-hidden="true">
+  <div class="ambient-blob ambient-blob--1"></div>
+  <div class="ambient-blob ambient-blob--2"></div>
+  <div class="ambient-blob ambient-blob--3"></div>
+</div>
+<div class="particles" id="particles" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<a class="back-link" href="./main.html">← LONESTAR</a>
+
+<div class="loading-screen" id="loading">
+  <div style="text-align:center; display:flex; flex-direction:column; align-items:center; gap:16px;">
+    <div class="loader-ring"></div>
+    <div class="glow-soft" style="letter-spacing:0.22em; font-size:0.78rem;">LOADING IDENTITY</div>
+  </div>
+</div>
+
+<main class="sanctuary" id="sanctuary" style="display:none;">
+  <div class="sanctuary-inner">
+    <!-- Hero -->
+    <section class="profile-hero glass-strong edge-light anim-scaleIn" id="hero">
+      <div class="profile-hero-top">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar-glow"></div>
+          <img class="profile-avatar" id="avatar" alt="Avatar" />
+          <span class="presence-dot offline" id="presenceDot" title="offline"></span>
+        </div>
+        <div class="profile-meta">
+          <div class="label-glow" id="hierarchyLabel">—</div>
+          <h1 class="profile-display" id="displayName">—</h1>
+          <div class="profile-username" id="username">@— · ID —</div>
+          <div class="profile-title" id="profileTitle" style="display:none;"></div>
+          <div class="badges profile-badges" id="badges"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bio typing -->
+    <section class="bio-panel glass edge-light anim-fadeInUp delay-1">
+      <div class="label-glow" style="margin-bottom:8px;">Biography — typing</div>
+      <div class="bio-text" id="bioText"></div>
+    </section>
+
+    <!-- Socials + Details -->
+    <section class="glass edge-light anim-fadeInUp delay-2" style="padding:18px; border-radius:18px;">
+      <div class="label-glow" style="margin-bottom:10px;">Connect</div>
+      <div class="social-grid" id="socials"></div>
+      <div id="noSocials" class="text-dim" style="font-size:0.82rem; display:none;">No public links shared.</div>
+      <div class="divider" style="margin:14px 0;"></div>
+      <div class="detail-row">
+        <div class="detail-card glass-subtle"><span class="detail-label">Discord ID</span><span class="detail-value" id="did">—</span></div>
+        <div class="detail-card glass-subtle"><span class="detail-label">Hierarchy</span><span class="detail-value" id="hier">—</span></div>
+      </div>
+      <div class="detail-card glass-subtle" style="margin-top:12px; text-align:center;"><span class="detail-label">Profile Views</span><span class="detail-value" id="profileViews">— views</span></div>
+      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn-ghost" id="copyId">Copy ID</button>
+        <button class="btn-ghost" id="copyLink">Copy Profile Link</button>
+        <a class="btn-ghost" href="./main.html">Back to Hierarchy</a>
+      </div>
+    </section>
+
+    <!-- Error fallback hidden -->
+    <section id="errorPanel" class="error-panel glass-strong edge-light" style="display:none;">
+      <h2 class="glow-soft">Identity Not Found</h2>
+      <p class="text-muted" style="margin-top:8px; line-height:1.6;">This Discord ID isn’t configured in <code>data/members.json</code> or the ID is invalid. Only manually chosen IDs appear — no server auto-import.</p>
+      <div style="margin-top:14px;"><a class="btn-glass" href="./main.html">Return to Sanctuary</a></div>
+    </section>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="./js/discord.js"></script>
+<script src="./js/background.js"></script>
+<script src="./js/music.js"></script>
+<script src="./js/counter.js"></script>
+<script src="./js/profile.js"></script>
 </body>
 </html>
