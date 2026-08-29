@@ -43,6 +43,16 @@ const MOCK_USERS = {
     badges: ["HOUSE_BRAVERY", "EARLY_SUPPORTER"],
     accentColor: null
   },
+    "1528034851238969496": {
+    id: "1528034851238969496",
+    username: "lonestar.founder",
+    displayName: "LONESTAR FOUNDER",
+    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    avatarDecoration: null,
+    badges: ["HOUSE_BRAVERY", "EARLY_SUPPORTER"],
+    accentColor: null
+  },
   // Godmother
   "641532736024215553": {
     id: "641532736024215553",
