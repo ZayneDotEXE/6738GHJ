@@ -49,25 +49,81 @@
     }
   })();
 
-  // Typing bio
+   // Typing bio — loops: custom bio → "Lonestar On Top" → custom bio …
   function typeBio(el, text, speed=22, delay=180){
     if(!el) return;
-    el.textContent="";
-    let i=0;
+    const ALT = "Lonestar On Top";
+    const pauseBio = 2600;      // delay before deleting custom bio
+    const pauseAlt = 2000;      // delay before deleting ALT
+    const between = 420;        // pause when empty before typing next
+    const delSpeed = 28;        // backspace speed
+    let idx = 0;
+    let phase = 0; // 0:typing bio 1:pause before del bio 2:deleting bio 3:pause before alt 4:typing alt 5:pause before del alt 6:deleting alt
+    let curText = text;
     const cursor=document.createElement("span");
     cursor.className="typing-cursor";
-    function step(){
-      el.textContent = text.slice(0,i);
+    cursor.style.display="inline-block";
+    cursor.style.width="2px"; cursor.style.height="1.08em";
+    cursor.style.background="rgba(255,255,255,0.9)"; cursor.style.boxShadow="0 0 8px rgba(255,255,255,0.85)";
+    cursor.style.verticalAlign="text-bottom"; cursor.style.marginLeft="2px";
+    const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function render(){
+      el.textContent = curText.slice(0, idx);
       el.appendChild(cursor);
-      if(i < text.length){
-        i++;
-        const jitter = Math.random()*18;
-        setTimeout(step, speed + jitter);
-      } else {
-        setTimeout(()=> cursor.style.opacity="0", 900);
+    }
+    function tick(){
+      render();
+      if(prefersReduced){
+        el.textContent = text;
+        el.appendChild(cursor);
+        cursor.style.opacity="0";
+        return;
+      }
+      if(phase===0){
+        if(idx < curText.length){
+          idx++;
+          setTimeout(tick, speed + Math.random()*18);
+        } else {
+          phase=1;
+          setTimeout(tick, pauseBio);
+        }
+      } else if(phase===1){
+        phase=2; tick();
+      } else if(phase===2){
+        if(idx > 0){
+          idx--;
+          setTimeout(tick, delSpeed + Math.random()*12);
+        } else {
+          phase=3;
+          setTimeout(tick, between);
+        }
+      } else if(phase===3){
+        curText = ALT;
+        phase=4; tick();
+      } else if(phase===4){
+        if(idx < curText.length){
+          idx++;
+          setTimeout(tick, speed + Math.random()*18);
+        } else {
+          phase=5;
+          setTimeout(tick, pauseAlt);
+        }
+      } else if(phase===5){
+        phase=6; tick();
+      } else if(phase===6){
+        if(idx > 0){
+          idx--;
+          setTimeout(tick, delSpeed + Math.random()*12);
+        } else {
+          curText = text;
+          phase=0;
+          setTimeout(tick, between);
+        }
       }
     }
-    setTimeout(step, delay);
+    idx=0; curText=text; phase=0;
+    render();
+    setTimeout(tick, delay);
   }
 
   async function fetchMembers(){
