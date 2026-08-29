@@ -60,9 +60,7 @@
       document.addEventListener('keydown', function(e){ e.preventDefault(); e.stopPropagation(); }, {capture:true});
       document.addEventListener('contextmenu', function(e){ e.preventDefault(); e.stopPropagation(); }, {capture:true});
     }catch(e){}
-    setTimeout(function(){
-      try{ window.opener=null; window.open('','_self'); window.close(); }catch(e){}
-    }, 600);
+    // stay on block screen — no window.close/history.back redirect (was causing jump to profile)
   }
   try{
     if(location.protocol === 'view-source:'){
@@ -95,11 +93,12 @@
       detectors: [0,1,2,3,4,5,6,7],
       seo: true,
       url: '',
-      timeOutUrl: 'https://theajack.github.io/disable-devtool/404.html?h='+encodeURIComponent(location.host),
+      timeOutUrl: '',
       rewriteHTML: '',
       ondevtoolopen: function(type, next){
         block(type);
-        setTimeout(function(){ try{ next(); }catch(e){} }, 900);
+        // do NOT call next() — library's next() does window.close + history.back + redirect to 404
+        // which was causing navigation to profile page. Block screen stays in place.
       },
       ondevtoolclose: function(){
         try{ console.log('[LONESTAR] DevTools closed'); }catch(e){}
