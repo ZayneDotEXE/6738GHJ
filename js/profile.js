@@ -52,7 +52,7 @@
    // Typing bio — loops: custom bio → "Lonestar On Top" → custom bio …
   function typeBio(el, text, speed=22, delay=180){
     if(!el) return;
-    const ALT = "Lonestar On Top";
+    const ALT = "Lonestar On Top!!";
     const pauseBio = 2600;      // delay before deleting custom bio
     const pauseAlt = 2000;      // delay before deleting ALT
     const between = 420;        // pause when empty before typing next
