@@ -193,6 +193,17 @@
       "music": "",
       "links": {},
       "profileTitle": "Sins — Ghost"
+    },
+        {
+      "discordId": "1131068291700490330",
+      "hierarchy": "Shits",
+      "bio": "ᵇⁱᵗᶜʰ ᵃⁱⁿ’ᵗ ᶠʳᵉᵉ.",
+      "background": "assets/images/tanya.gif",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "assets/music/tanya.mp3",
+      "links": { "onlyfans": "https://onlyfans.wtf/_.tanya.x" },
+      "profileTitle": "Shits — LUST"
     }
   ]
 }
