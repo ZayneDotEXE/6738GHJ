@@ -98,12 +98,12 @@
     {
       "discordId": "996787931974996129",
       "hierarchy": "Sins",
-      "bio": "Sins — built different. Mods, methods, and myth.",
-      "background": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1920&q=80&auto=format&fit=crop",
+      "bio": "Livin’",
+      "background": "assets/images/thea.gif",
       "backgroundType": "image",
       "backgroundFallback": "",
-      "music": "assets/music/sin-myth.mp3",
-      "links": { "youtube": "", "website": "" },
+      "music": "assets/music/thea.mp3",
+      "links": { "instagram": "https://www.instagram.com/al_thea___", "website": "" },
       "profileTitle": "Sins — Myth"
     },
     {
