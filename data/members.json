@@ -186,13 +186,13 @@
     {
       "discordId": "1242493526206447677",
       "hierarchy": "Sins",
-      "bio": "Sins — verified LONESTAR. Ghost protocol.",
-      "background": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1920&q=80&auto=format&fit=crop",
+      "bio": "My goal is to be the best in the world. The depth of your desire is nowhere near mine.",
+      "background": "assets/images/shino.jpg",
       "backgroundType": "image",
       "backgroundFallback": "",
-      "music": "",
-      "links": {},
-      "profileTitle": "Sins — Ghost"
+      "music": "assets/music/shino.mp3",
+      "links": { "instagram": "https://www.instagram.com/sico_ho"},
+      "profileTitle": "Sins — Modder"
     },
         {
       "discordId": "1131068291700490330",
