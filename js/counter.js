@@ -1,12 +1,5 @@
-/**
- * js/counter.js — View counters for GitHub Pages (no backend)
- * Uses abacus.jasoncameron.dev (CORS *) with localStorage fallback
- * Main page: hit("main") -> #mainViews
- * Profile: hit("profile-<discordId>") -> #profileViews
- * Namespace is fixed so counts persist across deploys. Change to reset.
- */
 const Counter = (() => {
-  const NAMESPACE = "lonestar-modder-v1"; // change to reset all counts
+  const NAMESPACE = "lonestar-modder-v1"; 
   const API = "https://abacus.jasoncameron.dev";
 
   function fmt(n){
@@ -18,7 +11,7 @@ const Counter = (() => {
 
   async function hit(key, el){
     const lsKey = `views:${NAMESPACE}:${key}`;
-    // try remote abacus
+
     try{
       const url = `${API}/hit/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(key)}`;
       const r = await fetch(url, { cache: "no-store" });
@@ -28,13 +21,13 @@ const Counter = (() => {
       if(typeof val === "number"){
         localStorage.setItem(lsKey, String(val));
         if(el) el.textContent = el.id === "mainViews" ? fmt(val) : `${fmt(val)} views`;
-        // also dispatch event
+
         window.dispatchEvent(new CustomEvent("counter:hit", { detail: { key, value: val }}));
         return val;
       }
       throw new Error("no value");
     }catch(err){
-      // fallback: localStorage increment (per-browser, still shows something)
+
       let v = parseInt(localStorage.getItem(lsKey) || "0", 10);
       v += 1;
       localStorage.setItem(lsKey, String(v));
@@ -45,7 +38,6 @@ const Counter = (() => {
   }
 
   async function get(key, el){
-    // read without increment (uses abacus get)
     try{
       const r = await fetch(`${API}/get/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(key)}`, { cache: "no-store" });
       if(r.ok){
@@ -65,7 +57,6 @@ const Counter = (() => {
 
 if(typeof window !== "undefined"){
   window.Counter = Counter;
-  // auto-hit based on page — profile views are handled by profile.js after resolving ?id/?username/@ to id
   document.addEventListener("DOMContentLoaded", ()=>{
     const isProfile = location.pathname.includes("profile.html") || location.pathname.includes("/@");
     if(isProfile){
