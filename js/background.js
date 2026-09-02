@@ -1,9 +1,3 @@
-/**
- * js/background.js — Cinematic background loader
- * Supports JPG/JPEG/PNG/WebP/GIF/MP4/WebM with fallback, overlay, vignette-safe
- * Lazy, cleans up previous video, never shows broken media.
- */
-
 const Background = (() => {
   let currentVideo = null;
   let currentImg = null;
@@ -21,19 +15,12 @@ const Background = (() => {
     return "image";
   }
 
-  /**
-   * Load background into container (expects .bg-media child with img/video)
-   * @param {HTMLElement} container - .bg-media or wrapper
-   * @param {{src:string, type?:string, fallback?:string}} opts
-   * @returns {{kind:string, el:HTMLElement}}
-   */
   function load(container, opts) {
     const src = opts.src;
     const type = (opts.type || extType(src)).toLowerCase();
     const fallback = opts.fallback || "";
     if (!container) return null;
 
-    // Cleanup previous
     _cleanup(container);
 
     const overlay = container.parentElement?.querySelector(".background-overlay");
@@ -41,7 +28,7 @@ const Background = (() => {
     if (isVideoType(type)) {
       return _loadVideo(container, src, fallback);
     } else {
-      // gif / image / webp / png / jpg
+
       return _loadImage(container, src, fallback, isGifType(type, src));
     }
   }
@@ -61,7 +48,7 @@ const Background = (() => {
           console.warn("[bg] image failed, trying fallback:", fallback);
           trySrc(fallback, true);
         } else if (!isFallback) {
-          // default site bg
+
           img.src = "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop";
           img.style.opacity = "0.62";
         } else {
@@ -88,7 +75,7 @@ const Background = (() => {
     video.muted = true;
     video.loop = true;
     video.playsInline = true;
-    // important for GitHub Pages / mobile
+
     video.setAttribute("autoplay", "");
     video.setAttribute("muted", "");
     video.setAttribute("loop", "");
@@ -99,7 +86,6 @@ const Background = (() => {
     video.controls = false;
     video.disablePictureInPicture = true;
 
-    // hide img
     const img = container.querySelector("img");
     if (img) img.style.display = "none";
 
@@ -115,14 +101,11 @@ const Background = (() => {
     video.oncanplay = () => {
       video.style.opacity = "0.62";
       video.play().catch(() => {
-        // autoplay may be blocked — still show poster frame
         video.style.opacity = "0.62";
       });
     };
-    // Ensure loop via native attribute; also JS fallback
-    video.onended = () => { video.currentTime = 0; video.play().catch(()=>{}); };
 
-    // If src is remote mp4, set directly; if local asset missing, error will trigger fallback
+    video.onended = () => { video.currentTime = 0; video.play().catch(()=>{}); };
     video.src = src;
     video.load();
     return { kind: "video", el: video };
@@ -136,13 +119,11 @@ const Background = (() => {
   }
 
   function setOverlayOpacity(overlayEl, darkness01) {
-    // darkness 0-100 → a1 0.22-0.62, a2 0.48-0.80
     const a1 = (0.22 + darkness01 * 0.004).toFixed(2);
     const a2 = (0.48 + darkness01 * 0.0032).toFixed(2);
     if (overlayEl) overlayEl.style.background = `linear-gradient(rgba(0,0,0,${a1}), rgba(0,0,0,${a2}))`;
   }
 
-  // Parallax on mouse (subtle, cinematic)
   function enableParallax(bgMediaEl) {
     let raf = 0;
     window.addEventListener("mousemove", (e) => {
