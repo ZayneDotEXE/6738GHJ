@@ -1,5 +1,5 @@
 const DISCORD_CONFIG = {
-  apiEndpoint: import.meta.env.KJA671_SUGAR,
+  apiEndpoint: "__KJA671_SUGAR__",
   botToken: "",
   cacheTtlMs: 5 * 60 * 1000,
   fallbackAvatar: (id) => `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(id) % 5n)}.png`
