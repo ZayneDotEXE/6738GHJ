@@ -1,5 +1,3 @@
-  /* js/profile.js — Dynamic profile from ?id= — Discord + bio typing + BG + music + socials */
-
   const $ = (s, r=document) => r.querySelector(s);
   const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 
@@ -18,7 +16,6 @@
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
   function qp(name){ return new URLSearchParams(location.search).get(name); }
 
-  // Glow cursor + particles (reuse)
   (function initFX(){
     const glow=$("#cursorGlow");
     let raf=0, mx=0,my=0,gx=0,gy=0;
@@ -49,16 +46,15 @@
     }
   })();
 
-   // Typing bio — loops: custom bio → "Lonestar On Top" → custom bio …
   function typeBio(el, text, speed=22, delay=180){
     if(!el) return;
     const ALT = "Lonestar On Top!!";
-    const pauseBio = 2600;      // delay before deleting custom bio
-    const pauseAlt = 2000;      // delay before deleting ALT
-    const between = 420;        // pause when empty before typing next
-    const delSpeed = 28;        // backspace speed
+    const pauseBio = 2600;    
+    const pauseAlt = 2000;    
+    const between = 420;       
+    const delSpeed = 28;    
     let idx = 0;
-    let phase = 0; // 0:typing bio 1:pause before del bio 2:deleting bio 3:pause before alt 4:typing alt 5:pause before del alt 6:deleting alt
+    let phase = 0; 
     let curText = text;
     const cursor=document.createElement("span");
     cursor.className="typing-cursor";
@@ -186,7 +182,7 @@
     const p = new URLSearchParams(location.search);
     const byId = (p.get("id")||"").trim();
     const byUser = (p.get("username")||p.get("u")||p.get("user")||p.get("name")||"").trim();
-    // clean URL: /@_lowquality or /@ZAYNE or /6738GHJ/@_lowquality
+
     let clean = "";
     const path = location.pathname;
     const atIdx = path.indexOf("/@");
@@ -204,19 +200,15 @@
       const { byId, byUser } = getAllParams();
       let id = byId;
       let entry = null;
-      // 1) direct id
+
       if(id && window.DiscordAPI.isValidSnowflake(id)){
         entry = members.find(m=> String(m.discordId).trim()===id);
       }
-      // 2) username / display name (case-insensitive) -> find entry via MOCK_USERS or live lookup
       if(!entry && byUser){
         const want = byUser.toLowerCase();
-        // try to find in members via mock username/displayName
         for(const m of members){
-          const mock = (window.DiscordAPI && window.DiscordAPI.BADGE_META) ? null : null; // keep reference
-          // we need to check via MOCK_USERS if available, else will fetch later
+          const mock = (window.DiscordAPI && window.DiscordAPI.BADGE_META) ? null : null;
           const mid = String(m.discordId);
-          // try mock first (instant)
           try{
             const mockUser = (typeof MOCK_USERS !== 'undefined' && MOCK_USERS[mid]) ? MOCK_USERS[mid] : null;
             if(mockUser){
@@ -226,9 +218,7 @@
             }
           }catch{}
         }
-        // if not found via mock, try live: fetch all and match (fallback, may be slower)
         if(!entry){
-          // try to match by live Discord fetch for each member (first match)
           for(const m of members){
             try{
               const u = await window.DiscordAPI.getDiscordUser(String(m.discordId));
@@ -248,26 +238,21 @@
       if(!window.DiscordAPI.isValidSnowflake(id)){
         throw Object.assign(new Error(`Invalid Discord ID "${id}"`), { code:"INVALID_ID" });
       }
-      // if we resolved via username, keep username in URL (user wants username in bar), else ensure entry found
       if(!entry) entry = members.find(m=> String(m.discordId).trim()===id);
       if(!entry){
         const user = await window.DiscordAPI.getDiscordUser(id);
         throw Object.assign(new Error(`ID ${id} not in data/members.json — add it to make it appear`), { code:"NOT_CONFIGURED", user });
       }
-      // profile views — increment per-id regardless of ?id vs ?username vs /@ clean
       try{
       const vEl = document.getElementById("profileViews");
       if(vEl && window.Counter) window.Counter.hit(`profile-${id}`, vEl);
       }catch{}
-       // Resolve Discord
       const discord = await window.DiscordAPI.getDiscordUser(id);
-      // BG
       const bgMedia=$("#bgMedia");
       const bgOpts = { src: entry.background || "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop", type: entry.backgroundType || "image", fallback: entry.backgroundFallback || "" };
       window.Background.load(bgMedia, bgOpts);
       window.Background.enableParallax(bgMedia.querySelector("img,video")||bgMedia);
 
-      // Fill profile
       $("#avatar").src = discord.avatar;
       $("#avatar").onerror = function(){ this.src="https://cdn.discordapp.com/embed/avatars/0.png"; };
       $("#displayName").textContent = discord.displayName || discord.username;
@@ -281,7 +266,6 @@
 
       const badgesHtml = window.DiscordAPI.renderBadges(discord.badges||[]);
       $("#badges").innerHTML = badgesHtml || `<span class="badge" style="opacity:0.62;">No badges</span>`;
-      // presence dot bottom-right — entry.presence overrides Discord (fixes Lanyard 404 -> offline)
       const dot = document.getElementById("presenceDot");
       if(dot){
         const raw = String(entry.presence || entry.status || discord.presence || "offline").toLowerCase();
@@ -291,14 +275,12 @@
         dot.title = cls;
       }
 
-      // Bio typing
       const bio = entry.bio || "No biography configured.";
       typeBio($("#bioText"), bio, 22, 280);
 
       renderSocials(entry.links);
       initMusic(entry, discord);
 
-      // Copy handlers
       $("#copyId")?.addEventListener("click", async()=>{
         try{ await navigator.clipboard.writeText(id); toast("ID copied"); }catch{ toast(id); }
       });
@@ -307,7 +289,6 @@
         try{ await navigator.clipboard.writeText(url); toast("Profile link copied"); }catch{ toast(url); }
       });
 
-      // Show sanctuary
       sanctuary.style.display="grid";
       errorPanel.style.display="none";
       document.title = `${discord.displayName} — LONESTAR`;
@@ -320,7 +301,6 @@
       $("#socials").parentElement.style.display="none";
       const ep=$("#errorPanel");
       ep.style.display="block";
-      // If we have a fallback user from error, show minimal
       if(err.user){
         hero.style.display="flex";
         $("#avatar").src = err.user.avatar;
@@ -328,11 +308,10 @@
         $("#username").textContent = `@${err.user.username} · ID ${err.user.id}`;
         $("#badges").innerHTML = window.DiscordAPI.renderBadges(err.user.badges||[]);
       }
-      // Show reason inside error panel
+      
       const p = ep.querySelector("p");
       if(p) p.textContent = err.message;
       toast(err.message, true);
-      // still set BG fallback
       try{
         const bgMedia=$("#bgMedia");
         window.Background.load(bgMedia, { src:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80&auto=format&fit=crop", type:"image", fallback:"" });
