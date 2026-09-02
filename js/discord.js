@@ -1,38 +1,12 @@
-/**
- * js/discord.js — Secure Discord abstraction for GitHub Pages
- * -----------------------------------------------------------
- * Architecture (never expose secrets in frontend):
- *   GitHub Pages Frontend → Secure Serverless/API Endpoint → Discord API → Website
- *
- * 1) Create a private Serverless endpoint (Vercel / Cloudflare Workers / Netlify Functions)
- *    that holds your BOT_TOKEN or OAuth secret server-side.
- * 2) Endpoint should expose GET /api/discord/user/:id returning { id, username, displayName, avatar, banner, badges, flags }
- * 3) Set DISCORD_API_ENDPOINT below to your deployed URL. Leave empty for demo/fallback mode.
- *
- * Frontend contains ZERO secrets. No base64, no obfuscation — just a public fetch to your endpoint.
- * If endpoint is not configured, graceful mock fallback ensures site never breaks.
- */
-
 const DISCORD_CONFIG = {
-  // OPTION 1 (secure, recommended): set to your serverless URL e.g. "https://your-worker.workers.dev"
-  // Keep empty for demo/mock mode.
   apiEndpoint: "https://lonestar-discord.mhonreyes55.workers.dev/",
-
-  // OPTION 2 (insecure, you said you don't care if seen): paste BOT_TOKEN directly here.
-  // If set, frontend will fetch Discord API directly. GitHub secret scanning may auto-reset it.
-  // Discords API does NOT send CORS headers, so direct browser fetch may be blocked — serverless (apiEndpoint) avoids that.
-  botToken: "", // e.g. "MTM1..."
-
-  // Optional: cache TTL ms (5 min)
+  botToken: "",
   cacheTtlMs: 5 * 60 * 1000,
-
-  // Fallback CDN for avatar when API unavailable (DiceBear or Discord default)
   fallbackAvatar: (id) => `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(id) % 5n)}.png`
 };
 
-/** Mock dataset — real LONESTAR Discord IDs. Live Discord data will override these when apiEndpoint is set. */
 const MOCK_USERS = {
-  // Founder
+
   "575999868804399119": {
     id: "575999868804399119",
     username: "lonestar.founder",
@@ -53,7 +27,7 @@ const MOCK_USERS = {
     badges: ["HOUSE_BRAVERY", "EARLY_SUPPORTER"],
     accentColor: null
   },
-  // Godmother
+
   "641532736024215553": {
     id: "641532736024215553",
     username: "nocturnalxx1",
@@ -73,7 +47,7 @@ const MOCK_USERS = {
     badges: ["HOUSE_BRILLIANCE"],
     accentColor: null
   },
-  // Sins
+
   "744471375208775722": {
     id: "744471375208775722",
     username: "lonestar.sin1",
@@ -128,7 +102,7 @@ const MOCK_USERS = {
     badges: ["HOUSE_BALANCE"],
     accentColor: null
   },
-  // Shits
+
   "1126909367028031488": {
     id: "1126909367028031488",
     username: "lonestar.shit1",
@@ -194,7 +168,6 @@ const MOCK_USERS = {
   }
 };
 
-/** Badge metadata for rendering */
 const BADGE_META = {
   STAFF: { label: "Staff", icon: "✦" },
   PARTNER: { label: "Partner", icon: "◆" },
@@ -217,7 +190,6 @@ const BADGE_META = {
   NITRO: { label: "Nitro", icon: "⬥" }
 };
 
-// Discord flags bitfield -> badge names (public_flags)
 const FLAG_BITS = [
   [1, "STAFF"],
   [2, "PARTNER"],
@@ -245,7 +217,6 @@ function flagsToBadges(val){
 const _cache = new Map();
 const _presenceCache = new Map();
 
-// Presence via Lanyard (public, CORS *) — best effort, falls back to offline
 async function getPresence(discordId){
   if(_presenceCache.has(discordId)){
     const c=_presenceCache.get(discordId);
@@ -257,13 +228,12 @@ async function getPresence(discordId){
       const j=await r.json();
       const s=j?.data?.discord_status;
       if(s && ["online","idle","dnd","offline"].includes(s)){
-        const v = s === "offline" ? "offline" : s; // invisible = offline
+        const v = s === "offline" ? "offline" : s; 
         _presenceCache.set(discordId, {v, t:Date.now()});
         return v;
       }
     }
   }catch{}
-  // fallback: check Discord raw status if available, else offline
   _presenceCache.set(discordId, {v:"offline", t:Date.now()});
   return "offline";
 }
@@ -284,7 +254,7 @@ function normalizeUser(raw, id) {
   const avatarHash = raw.avatar ?? raw.avatarHash ?? null;
   const avatarUrl = raw.avatarUrl || (avatarHash ? toDiscordCdnAvatarUrl(id, avatarHash) : raw.avatar || MOCK_USERS[id]?.avatar || DISCORD_CONFIG.fallbackAvatar(id));
   const bannerUrl = raw.bannerUrl || raw.banner || null;
-  // badges: support array or bitfield integer (public_flags/flags)
+
   let badges = [];
   if(Array.isArray(raw.badges) && raw.badges.length) badges = raw.badges;
   else if(Array.isArray(raw.flags) && raw.flags.length) badges = raw.flags;
@@ -292,7 +262,7 @@ function normalizeUser(raw, id) {
     const pf = raw.public_flags ?? raw.publicFlags ?? raw.flags;
     if(typeof pf === 'number') badges = flagsToBadges(pf);
   }
-  // also try raw.data?.public_flags if nested
+
   if(!badges.length && raw.data && typeof raw.data.public_flags === 'number') badges = flagsToBadges(raw.data.public_flags);
   return {
     id: String(raw.id || id),
@@ -302,17 +272,12 @@ function normalizeUser(raw, id) {
     banner: bannerUrl,
     avatarDecoration: raw.avatarDecoration || raw.avatar_decoration_data || null,
     badges,
-    presence: raw.presence || raw.status || null, // online/idle/dnd/offline
+    presence: raw.presence || raw.status || null,
     accentColor: raw.accentColor ?? raw.accent_color ?? null,
     raw
   };
 }
 
-/**
- * Main abstraction — rest of site calls only this.
- * @param {string} discordId
- * @returns {Promise<{id,username,displayName,avatar,banner,badges}|null>}
- */
 async function getDiscordUser(discordId) {
   if (!isValidSnowflake(discordId)) {
     console.warn("[discord] invalid snowflake:", discordId);
@@ -322,12 +287,11 @@ async function getDiscordUser(discordId) {
   }
   const cached = _cache.get(discordId);
   if (cached && Date.now() - cached.t < DISCORD_CONFIG.cacheTtlMs) {
-    // refresh presence even from cache (cheap)
+
     if(!cached.v.presence) cached.v.presence = await getPresence(discordId);
     return cached.v;
   }
 
-  // 1) Try secure serverless endpoint if configured (recommended, handles CORS)
   if (DISCORD_CONFIG.apiEndpoint) {
     try {
       const url = `${DISCORD_CONFIG.apiEndpoint.replace(/\/$/, "")}/api/discord/user/${encodeURIComponent(discordId)}`;
@@ -345,7 +309,6 @@ async function getDiscordUser(discordId) {
     }
   }
 
-  // 1b) Direct bot token in frontend (insecure, you said ok) — may be blocked by CORS
   if (DISCORD_CONFIG.botToken) {
     try {
       const res = await fetch(`https://discord.com/api/v10/users/${encodeURIComponent(discordId)}`, {
