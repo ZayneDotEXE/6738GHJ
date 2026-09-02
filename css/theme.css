@@ -1,11 +1,4 @@
-/* ==========================================================================
-   DARK CINEMATIC THEME — IYAKNAKO / LONESTAR
-   Vision: Black/Dark Background → Transparent Dark Glass → White Typography → Subtle White Glow → Cinematic Motion
-   ========================================================================== */
-
-/* ---------- CSS Variables ---------- */
 :root {
-  /* Dark Palette */
   --bg-near-black: #060608;
   --bg-charcoal: #0a0a0d;
   --bg-deep: #111114;
@@ -35,7 +28,6 @@
   --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -52,7 +44,6 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; }
 img { display: block; max-width: 100%; }
 
-/* ---------- Background System ---------- */
 .bg-root {
   position: fixed;
   inset: 0;
@@ -72,7 +63,6 @@ img { display: block; max-width: 100%; }
   width: 100%; height: 100%; object-fit: cover;
 }
 
-/* Background Darkening — ensures readability over GIF/MP4/PNG/JPG/WebP */
 .background-overlay {
   position: absolute;
   inset: 0;
@@ -88,7 +78,6 @@ img { display: block; max-width: 100%; }
   background: radial-gradient(900px 600px at 50% 35%, transparent 45%, rgba(0,0,0,0.35) 100%);
 }
 
-/* Cinematic Vignette */
 .vignette {
   position: fixed;
   inset: 0;
@@ -98,7 +87,6 @@ img { display: block; max-width: 100%; }
   opacity: 0.9;
 }
 
-/* Ambient White Glow — slow drifting light blobs */
 .ambient {
   position: fixed;
   inset: 0;
@@ -137,7 +125,6 @@ img { display: block; max-width: 100%; }
 @keyframes drift2 { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(-50px,30px,0) scale(1.06); } }
 @keyframes drift3 { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(30px,-35px,0) scale(1.04); } }
 
-/* Mouse-following ambient glow */
 .cursor-glow {
   position: fixed;
   width: 720px; height: 720px;
@@ -151,7 +138,6 @@ img { display: block; max-width: 100%; }
   mix-blend-mode: screen;
 }
 
-/* ---------- Typography Glow Hierarchy ---------- */
 .glow-primary {
   color: #ffffff;
   text-shadow: 0 0 10px rgba(255,255,255,0.50), 0 0 30px rgba(255,255,255,0.22), 0 0 60px rgba(255,255,255,0.08);
@@ -172,8 +158,6 @@ img { display: block; max-width: 100%; }
 }
 .text-muted { color: var(--text-muted); }
 .text-dim { color: var(--text-dim); }
-
-/* Primary titles */
 .hero-title {
   font-family: 'Cormorant Garamond', 'Cinzel', serif;
   font-size: clamp(2.6rem, 7vw, 5.2rem);
@@ -223,8 +207,6 @@ img { display: block; max-width: 100%; }
   text-shadow: 0 0 6px rgba(255,255,255,0.28);
   font-weight: 600;
 }
-
-/* ---------- Glassmorphism ---------- */
 .glass {
   background: var(--glass-bg);
   backdrop-filter: blur(18px);
@@ -259,8 +241,6 @@ img { display: block; max-width: 100%; }
     0 1px 0 rgba(255,255,255,0.08) inset;
   transform: translateY(-2px);
 }
-
-/* White Edge Lighting — inner + outer */
 .edge-light {
   position: relative;
   overflow: hidden;
@@ -289,14 +269,10 @@ img { display: block; max-width: 100%; }
   transition: opacity 0.5s ease;
 }
 .edge-light:hover::after { opacity: 1; }
-
-/* ---------- Layout ---------- */
 .container {
   width: min(1120px, 92vw);
   margin: 0 auto;
 }
-
-/* Navbar */
 .nav {
   position: sticky;
   top: 0;
@@ -390,8 +366,6 @@ img { display: block; max-width: 100%; }
   transition: all 0.3s ease;
 }
 .btn-ghost:hover { border-color: rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.04); }
-
-/* ---------- Hero ---------- */
 .hero {
   padding: 56px 0 28px;
   text-align: center;
@@ -438,8 +412,6 @@ img { display: block; max-width: 100%; }
 }
 .stat-value { font-size: 1.45rem; font-weight: 700; color: #fff; text-shadow: var(--glow-soft); }
 .stat-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
-
-/* ---------- Featured Profile (main glass panel) ---------- */
 .featured {
   margin-top: 30px;
   display: grid;
@@ -536,14 +508,10 @@ img { display: block; max-width: 100%; }
   transform: translateY(-1px);
 }
 .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent); }
-
-/* Mini stats inside profile */
 .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .mini-stat { text-align: center; padding: 12px 8px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
 .mini-stat strong { display: block; color: #fff; text-shadow: var(--glow-soft); font-size: 1.02rem; }
 .mini-stat span { font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
-
-/* ---------- Info / Controls panel ---------- */
 .info-panel {
   padding: 22px;
   border-radius: var(--radius-lg);
@@ -584,8 +552,6 @@ img { display: block; max-width: 100%; }
 .bg-thumb.active { opacity: 1; border-color: rgba(255,255,255,0.28); box-shadow: 0 0 16px rgba(255,255,255,0.12); }
 .bg-thumb:hover { opacity: 1; transform: translateY(-1px); }
 .bg-thumb img { width: 100%; height: 100%; object-fit: cover; }
-
-/* ---------- Hierarchy ---------- */
 .hierarchy { margin-top: 44px; }
 .hierarchy-header {
   display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px;
@@ -659,8 +625,6 @@ img { display: block; max-width: 100%; }
   border: 1px solid rgba(255,255,255,0.10);
   color: rgba(255,255,255,0.78);
 }
-
-/* ---------- Music Player (glass, dark) ---------- */
 .music-player {
   position: fixed;
   left: 50%;
@@ -721,8 +685,6 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
 }
 .progress-fill { height: 100%; width: 34%; background: linear-gradient(90deg, #fff, rgba(255,255,255,0.65)); box-shadow: 0 0 8px rgba(255,255,255,0.6); }
-
-/* ---------- Modals, Loading, Errors (dark consistent) ---------- */
 .modal-backdrop {
   position: fixed; inset: 0;
   background: rgba(0,0,0,0.62);
@@ -755,9 +717,8 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 0 14px rgba(255,255,255,0.12);
   animation: spin 1s linear infinite;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
 
-/* Error / toast */
+@keyframes spin { to { transform: rotate(360deg); } }
 .toast {
   position: fixed;
   top: 18px; left: 50%;
@@ -774,23 +735,18 @@ img { display: block; max-width: 100%; }
   z-index: 70;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* ---------- Utilities ---------- */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-/* Scrollbar dark */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: #060608; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 999px; border: 1px solid rgba(255,255,255,0.06); }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .ambient-blob { animation: none !important; }
   .cursor-glow { display: none; }
 }
 
-/* Mobile */
 @media (max-width: 720px) {
   .nav-links { display: none; }
   .hero { padding-top: 28px; }
