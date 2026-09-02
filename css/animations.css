@@ -1,24 +1,9 @@
-/* ==========================================================================
-   animations.css — Cinematic motion (extracted & extended)
-   - Drift, pulse, blink, spin, parallax, entrance, hover lighting
-   - Respects prefers-reduced-motion
-   ========================================================================== */
-
-/* Drift ambient blobs */
 @keyframes drift1 { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(60px,40px,0) scale(1.08); } }
 @keyframes drift2 { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(-50px,30px,0) scale(1.06); } }
 @keyframes drift3 { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(30px,-35px,0) scale(1.04); } }
-
-/* Pulse kicker dot */
 @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.92); } }
-
-/* Typing cursor */
 @keyframes blink { 50% { opacity: 0; } }
-
-/* Loader */
 @keyframes spin { to { transform: rotate(360deg); } }
-
-/* Grain (subtle film) */
 @keyframes grainShift {
   0% { transform: translate(0,0); }
   10% { transform: translate(-2%, -2%); }
@@ -33,21 +18,12 @@
   100% { transform: translate(0,0); }
 }
 
-/* Particle float */
 @keyframes floatY { 0% { transform: translateY(0); opacity: 0.0; } 10% { opacity: 0.55; } 90% { opacity: 0.55; } 100% { transform: translateY(-120vh); opacity: 0; } }
-
-/* Entrance */
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes scaleIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
-
-/* Glass reflection sweep */
 @keyframes sweep { 0% { transform: translateX(-140%); } 100% { transform: translateX(180%); } }
-
-/* Visualizer bars */
 @keyframes barPulse { 0%,100% { height: 6px; } 50% { height: 18px; } }
-
-/* Utilities */
 .anim-fadeInUp { animation: fadeInUp 0.75s cubic-bezier(0.22,1,0.36,1) both; }
 .anim-fadeIn { animation: fadeIn 0.6s ease both; }
 .anim-scaleIn { animation: scaleIn 0.55s cubic-bezier(0.22,1,0.36,1) both; }
@@ -55,8 +31,6 @@
 .delay-2 { animation-delay: 0.16s; }
 .delay-3 { animation-delay: 0.24s; }
 .delay-4 { animation-delay: 0.32s; }
-
-/* Grain overlay element */
 .grain {
   position: fixed;
   inset: -20%;
@@ -67,7 +41,6 @@
   animation: grainShift 8s steps(10) infinite;
 }
 
-/* Particles container */
 .particles {
   position: fixed;
   inset: 0;
@@ -85,13 +58,11 @@
   filter: blur(0.2px);
 }
 
-/* Hover lighting transition helpers */
 .hover-lift {
   transition: transform 0.42s cubic-bezier(0.22,1,0.36,1), box-shadow 0.42s ease, border-color 0.42s ease, background 0.42s ease;
 }
 .hover-lift:hover { transform: translateY(-3px); }
 
-/* Smooth scroll reveal (used by JS) */
 .reveal {
   opacity: 0;
   transform: translateY(14px);
@@ -99,7 +70,6 @@
 }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
-/* Visualizer */
 .viz {
   display: flex; align-items: end; gap: 3px; height: 18px;
 }
@@ -112,7 +82,6 @@
 .viz i:nth-child(3) { animation-delay: 0.24s; }
 .viz i:nth-child(4) { animation-delay: 0.08s; }
 
-/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
