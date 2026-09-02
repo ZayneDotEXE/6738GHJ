@@ -1,11 +1,3 @@
-/**
- * js/music.js — Single-track cinematic music manager
- * - Only one Audio element ever plays (singleton)
- * - Respects browser autoplay policy: play() must be after user gesture (Enter)
- * - Supports MP3/WAV/OGG via <audio>
- * - Progress, volume, pause, visualizer hook
- */
-
 const Music = (() => {
   let audio = null;
   let currentSrc = "";
@@ -18,7 +10,6 @@ const Music = (() => {
     audio = new Audio();
     audio.preload = "metadata";
     audio.loop = true;
-    // no crossOrigin - allows any MP3 link without CORS, background play only
     audio.volume = 0.52;
     audio.addEventListener("play", () => _startProgress());
     audio.addEventListener("pause", () => _stopProgress());
@@ -37,7 +28,7 @@ const Music = (() => {
       if (!audio || !audio.duration) return;
       const pct = (audio.currentTime / audio.duration) * 100;
       if (typeof onProgress === "function") onProgress(pct, audio.currentTime, audio.duration);
-      // dispatch event for visualizer
+
       window.dispatchEvent(new CustomEvent("music:progress", { detail: { pct, t: audio.currentTime, d: audio.duration } }));
     }, 120);
   }
@@ -45,17 +36,10 @@ const Music = (() => {
 
   function setInteract() { isInteracted = true; }
   function hasInteracted() { return isInteracted; }
-
-  /**
-   * Load a track (stops previous). Does NOT autoplay unless allowed.
-   * @param {string} src
-   * @param {{autoplay?:boolean}} opts
-   */
   function load(src, opts = {}) {
     if (!src) { stop(); return false; }
     const a = ensureAudio();
     if (currentSrc === src && a.src) {
-      // same track
       if (opts.autoplay && isInteracted) play();
       return true;
     }
@@ -64,7 +48,6 @@ const Music = (() => {
     a.src = src;
     a.load();
     if (opts.autoplay && isInteracted) {
-      // must be after gesture
       return play();
     }
     return true;
@@ -105,12 +88,10 @@ const Music = (() => {
   function getAudio() { return ensureAudio(); }
   function onProgressCb(cb) { onProgress = cb; }
 
-  // Global single-instance guarantee: if user sets new src elsewhere, stop old
   if (typeof window !== "undefined") {
     window.addEventListener("beforeunload", stop);
     document.addEventListener("visibilitychange", () => {
       if (document.hidden && audio && !audio.paused) {
-        // keep playing but lower? we keep; could pause to save battery
       }
     });
   }
@@ -123,7 +104,6 @@ const Music = (() => {
 
 if (typeof window !== "undefined") {
   window.Music = Music;
-  // Hook Enter experiences
   document.addEventListener("click", () => Music.setInteract(), { once: true, capture: true });
   document.addEventListener("keydown", () => Music.setInteract(), { once: true, capture: true });
   document.addEventListener("touchstart", () => Music.setInteract(), { once: true, capture: true });
