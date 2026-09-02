@@ -1,5 +1,3 @@
-/* js/main.js — Homepage: hierarchy, Discord, background, music, cinematic FX */
-
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 
@@ -28,10 +26,8 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, m=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
-// Loading
 window.addEventListener("load", () => setTimeout(()=> $("#loading")?.classList.add("hidden"), 650));
 
-// Mouse glow + edge lighting
 const glow = $("#cursorGlow");
 let raf=0, mx=0, my=0, gx=0, gy=0, glowEnabled=true;
 function onMove(e){
@@ -54,7 +50,6 @@ window.addEventListener("mousemove", onMove, {passive:true});
 window.addEventListener("mouseenter", ()=> { if(glow) glow.style.opacity=glowEnabled?"1":"0"; });
 window.addEventListener("mouseleave", ()=> { if(glow) glow.style.opacity="0"; });
 
-// Particles — subtle floating haze
 function spawnParticles(){
   const c = $("#particles");
   if(!c || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -73,9 +68,8 @@ function spawnParticles(){
     c.appendChild(p);
   }
 }
-spawnParticles();
 
-// Background: homepage from site config
+spawnParticles();
 async function initHomepageBG(site){
   const bgMedia = $("#bgMedia");
   if(!bgMedia) return;
@@ -86,7 +80,6 @@ async function initHomepageBG(site){
   window.Background.enableParallax(bgMedia.querySelector("img, video") || bgMedia);
 }
 
-// Music homepage — enter experience unlocks
 let __siteMusic = null;
 function syncPlayUI(){
   const playBtn=$("#playBtn"), viz=$("#viz");
@@ -110,7 +103,6 @@ function dismissSplash(){
   const hide = ()=>{ if(done) return; done=true; overlay.style.display="none"; overlay.setAttribute("aria-hidden","true"); document.body.style.overflow=""; };
   overlay.addEventListener("transitionend", hide, {once:true});
   setTimeout(hide, 780);
-  // try to play site music if available
   if(__siteMusic){
     try{
       window.Music.load(__siteMusic, {autoplay:true});
@@ -120,7 +112,7 @@ function dismissSplash(){
     syncPlayUI();
   }
 }
-// attach immediately — not after fetch (fixes click not working before data loads)
+
 (function initSplashEarly(){
   const attach = ()=>{
     const btn=document.getElementById("enterBtn");
@@ -134,7 +126,7 @@ function dismissSplash(){
   } else {
     attach();
   }
-  // also observe in case button is re-rendered
+
   setTimeout(attach, 300);
   setTimeout(attach, 1000);
   document.addEventListener("keydown", (e)=>{
@@ -147,13 +139,12 @@ function dismissSplash(){
 
 function initHomepageMusic(site){
   __siteMusic = site?.homepageMusic || null;
-  // background-only: preload silently, no UI
+
   if(__siteMusic){
     try{ window.Music.load(__siteMusic, { autoplay:false }); }catch{}
   }
 }
 
-// Fetch members.json repo-relative
 async function fetchMembers(){
   const urls = ["./data/members.json", "data/members.json", "/data/members.json"];
   for(const u of urls){
@@ -167,7 +158,6 @@ async function fetchMembers(){
   throw new Error("Cannot load data/members.json — check path for GitHub Pages (must be ./data/members.json)");
 }
 
-// Render hierarchy in strict order
 function tierContainer(hierarchy, members){
   const count = members.length;
   const label = HIERARCHY_LABEL[hierarchy] || hierarchy;
@@ -233,14 +223,11 @@ async function buildHierarchy(data){
     return { site, members };
   }
 
-  // Validate hierarchy values
   const valid = new Set(HIERARCHY_ORDER);
   const normalized = members.map(m=> ({...m, hierarchy: valid.has(m.hierarchy)?m.hierarchy:"Shits"}));
 
-  // Group by hierarchy in order
   const groups = HIERARCHY_ORDER.map(h=> [h, normalized.filter(m=> m.hierarchy===h)]);
 
-  // Render skeletons first (for perceived performance, lazy)
   root.innerHTML="";
   for(const [h, list] of groups){
     if(!list.length) continue;
@@ -248,19 +235,17 @@ async function buildHierarchy(data){
     root.appendChild(sec);
   }
 
-  // Update counts
   const total = members.length;
   memberCount.textContent = `${total} ${total===1?"member":"members"}`;
   statusText.textContent = `Resolving ${total} Discord profiles…`;
 
-  // Resolve Discord in parallel per tier but with error isolation per member
   let resolved = 0;
   for(const [h, list] of groups){
     const grid = document.getElementById(`tier-${h}`);
     if(!grid) continue;
-    // Create placeholders
+
     grid.innerHTML = list.map(()=> `<div class="member-card glass" style="min-height:118px; display:grid; place-items:center; opacity:0.62;"><span class="loader-ring" style="width:22px;height:22px;border-width:2px;"></span></div>`).join("");
-    // Fetch each Discord user
+
     const cards = await Promise.all(list.map(async (entry)=>{
       const id = String(entry.discordId||"").trim();
       if(!window.DiscordAPI.isValidSnowflake(id)){
@@ -273,19 +258,19 @@ async function buildHierarchy(data){
         return memberCardHTML(entry, user);
       }catch(err){
         console.warn("Discord resolve failed", id, err);
-        // graceful fallback still shows card with mock
+
         const fallback = { displayName:"Unknown Identity", username:"unknown", avatar:"https://cdn.discordapp.com/embed/avatars/0.png", badges:[] };
         return memberCardHTML(entry, fallback);
       }
     }));
     grid.innerHTML = cards.join("");
-    // Attach navigation
+
     [...grid.children].forEach(card=>{
       const id = card.getAttribute("data-id");
       const uname = card.getAttribute("data-username");
       if(!id) return;
       const go = ()=> { window.Music.stop();
-        // clean URL as requested: lonestarwxrld.com/@_lowquality
+
         const target = uname ? `./@${encodeURIComponent(uname)}` : `./profile.html?id=${encodeURIComponent(id)}`;
         location.href = target;
       };
@@ -297,12 +282,11 @@ async function buildHierarchy(data){
   statusText.textContent = `Ready — ${resolved} profiles`;
   if(empty) empty.style.display = members.length ? "none" : "block";
 
-  // Reveal observer
   const obs = new IntersectionObserver(es=>{
     es.forEach(e=> { if(e.isIntersecting) e.target.classList.add("in"); });
   }, { threshold:0.12 });
   $$(".reveal").forEach(el=> obs.observe(el));
-  // Trigger immediate for above-fold
+
   setTimeout(()=> $$(".reveal").forEach(el=> el.classList.add("in")), 120);
 
   document.getElementById("siteTagline") && (document.getElementById("siteTagline").textContent = site.tagline || document.getElementById("siteTagline").textContent);
@@ -310,13 +294,11 @@ async function buildHierarchy(data){
   return { site, members };
 }
 
-// Explore button smooth scroll
 $("#exploreBtn")?.addEventListener("click", e=>{
   e.preventDefault();
   $("#hierarchy")?.scrollIntoView({behavior:"smooth", block:"start"});
 });
 
-// Boot
 (async ()=>{
   try{
     const data = await fetchMembers();
@@ -328,7 +310,7 @@ $("#exploreBtn")?.addEventListener("click", e=>{
     $("#tiersRoot").innerHTML = `<div class="glass" style="padding:18px; border-radius:14px; border-color:rgba(255,90,90,0.22);"><div style="color:#ff9a9a; font-weight:600;">Failed to load members</div><div class="text-dim" style="font-size:0.82rem; margin-top:6px;">${escapeHtml(err.message)}</div><pre style="margin-top:10px; overflow:auto; background:rgba(0,0,0,0.32); padding:10px; border-radius:10px; font-size:0.72rem;">${escapeHtml(String(err.stack||err))}</pre></div>`;
     toast("Load error — see console", true);
   } finally {
-    // hide loading
+
     setTimeout(()=> $("#loading")?.classList.add("hidden"), 400);
   }
 })();
