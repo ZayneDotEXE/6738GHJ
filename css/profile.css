@@ -18,6 +18,7 @@
   transition: all 0.3s ease;
 }
 .back-link:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.20); color: #fff; box-shadow: 0 0 16px rgba(255,255,255,0.08); }
+
 .sanctuary {
   min-height: 100vh;
   display: grid;
@@ -36,6 +37,18 @@
   border-radius: 24px;
   position: relative;
   overflow: hidden;
+  background: url('assets/backgrounds/box.gif') center/cover no-repeat;
+}
+.profile-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,14,0.52);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
 }
 .profile-hero::after {
   content: "";
@@ -50,6 +63,11 @@
 }
 .profile-hero-top {
   display: flex; gap: 22px; align-items: flex-start;
+  position: relative; z-index: 1;
+}
+.profile-hero .profile-meta,
+.profile-hero .profile-avatar-wrap {
+  position: relative; z-index: 1;
 }
 @media (max-width: 640px) {
   .profile-hero-top { flex-direction: column; align-items: center; text-align: center; }
@@ -109,6 +127,7 @@
   text-shadow: 0 0 6px rgba(255,255,255,0.28);
 }
 .profile-badges { margin-top: 12px; }
+
 .bio-panel {
   padding: 20px 22px;
   border-radius: 18px;
