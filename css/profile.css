@@ -37,7 +37,7 @@
   border-radius: 24px;
   position: relative;
   overflow: hidden;
-  background: rgba(10,10,14,0.52);
+  background: rgba(10,10,14,0.32); 
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
@@ -46,7 +46,7 @@
   position: absolute;
   inset: 0;
   background: url('../assets/backgrounds/box.gif') center/cover no-repeat;
-  opacity: 0.5;
+  opacity: 0.5; 
   border-radius: inherit;
   z-index: 0;
   pointer-events: none;
@@ -61,14 +61,15 @@
   animation: sweep 7s ease-in-out infinite;
   pointer-events: none;
   opacity: 0.35;
+  z-index: 1;
 }
 .profile-hero-top {
   display: flex; gap: 22px; align-items: flex-start;
-  position: relative; z-index: 1;
+  position: relative; z-index: 2;
 }
 .profile-hero .profile-meta,
 .profile-hero .profile-avatar-wrap {
-  position: relative; z-index: 1;
+  position: relative; z-index: 2;
 }
 @media (max-width: 640px) {
   .profile-hero-top { flex-direction: column; align-items: center; text-align: center; }
