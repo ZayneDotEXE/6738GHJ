@@ -43,7 +43,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(10,10,14,0.52);
+  background: rgba(10,10,14,0.32);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   border-radius: inherit;
