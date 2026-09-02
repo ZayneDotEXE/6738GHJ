@@ -1,5 +1,5 @@
 const DISCORD_CONFIG = {
-  apiEndpoint: "__KJA671_SUGAR__",
+  apiEndpoint: "https://lonestar-discord.mhonreyes55.workers.dev/",
   botToken: "",
   cacheTtlMs: 5 * 60 * 1000,
   fallbackAvatar: (id) => `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(id) % 5n)}.png`
