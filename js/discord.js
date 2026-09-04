@@ -148,6 +148,15 @@ const MOCK_USERS = {
     badges: [],
     accentColor: null
   },
+    "1269297951537238109": {
+    id: "1269297951537238109",
+    username: "lonestar.sin9",
+    displayName: "SIN — 1243",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=320&q=80&auto=format&fit=crop",
+    banner: null,
+    badges: [],
+    accentColor: null
+  },
   "1242493526206447677": {
     id: "1242493526206447677",
     username: "lonestar.sin7",
