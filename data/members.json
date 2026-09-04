@@ -194,7 +194,18 @@
       "links": { "instagram": "https://www.instagram.com/sico_ho", "tiktok": "https://www.tiktok.com/@oncethenfallwlbe"},
       "profileTitle": "Sins — Modder"
     },
-        {
+    {
+      "discordId": "1269297951537238109",
+      "hierarchy": "Sins",
+      "bio": "My goal is to be the best in the world. The depth of your desire is nowhere near mine.",
+      "background": "assets/images/shino.jpg",
+      "backgroundType": "image",
+      "backgroundFallback": "",
+      "music": "assets/music/shino.mp3",
+      "links": { "instagram": "https://www.instagram.com/sico_ho", "tiktok": "https://www.tiktok.com/@oncethenfallwlbe"},
+      "profileTitle": "Sins — Modder"
+    },
+    {
       "discordId": "1131068291700490330",
       "hierarchy": "Shits",
       "bio": "ᵇⁱᵗᶜʰ ᵃⁱⁿ’ᵗ ᶠʳᵉᵉ.",
